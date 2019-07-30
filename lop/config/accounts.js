@@ -1,0 +1,5 @@
+var accounts = new Map();
+accounts.set('0xdCb25d3710645C2fe3Fd7e04601De50bD54ed124', '0xb5fe7a39a9bcc1b04e73fa54c0461cc1202d6ce489dafefdedaa51563f040d02');
+accounts.set('0x68b8e4f134e3Db829FA9368A9A11D5a5974391b8', '0xc075ad3c5b504ea96ec350d92784ef16082ae3ef3d9e10493815ec76a5fb3d40');
+accounts.set('0x7f7b9c7Eb33961739B2C15C1118713b91924c7d9', '0x112a4cad51997504e651e117ff2542faf5354fba10d403f95278ad97e4f7248e');
+module.exports = accounts;

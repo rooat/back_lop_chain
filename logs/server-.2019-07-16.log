@@ -1,0 +1,337 @@
+[2019-07-16T14:16:26.856] [ERROR] default - withdraw 2019-7-16 14:16:26 { DatabaseError [SequelizeDatabaseError]: Field 'type' doesn't have a default value
+    at Query.formatError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:247:16)
+    at Query.handler [as onResult] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:68:23)
+    at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:30:14)
+    at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+    at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+    at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+    at Socket.emit (events.js:193:13)
+    at addChunk (_stream_readable.js:295:12)
+    at readableAddChunk (_stream_readable.js:276:11)
+    at Socket.Readable.push (_stream_readable.js:231:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+  name: 'SequelizeDatabaseError',
+  parent:
+   { Error: Field 'type' doesn't have a default value
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_NO_DEFAULT_FOR_FIELD',
+     errno: 1364,
+     sqlState: 'HY000',
+     sqlMessage: "Field 'type' doesn't have a default value",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`user_id`,`data`) VALUES (NULL,1563257786842,'0x000',0,0,1000000000000000000,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',361,'');" },
+  original:
+   { Error: Field 'type' doesn't have a default value
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_NO_DEFAULT_FOR_FIELD',
+     errno: 1364,
+     sqlState: 'HY000',
+     sqlMessage: "Field 'type' doesn't have a default value",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`user_id`,`data`) VALUES (NULL,1563257786842,'0x000',0,0,1000000000000000000,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',361,'');" },
+  sql:
+   "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`user_id`,`data`) VALUES (NULL,1563257786842,'0x000',0,0,1000000000000000000,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',361,'');" }
+[2019-07-16T14:17:06.244] [ERROR] default - withdraw 2019-7-16 14:17:6 { Error: invalid number value (arg="value", coderType="uint256", value=null, version=4.0.30)
+    at Object.throwError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/errors.js:76:17)
+    at CoderNumber.encode (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:393:20)
+    at /Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:645:59
+    at Array.forEach (<anonymous>)
+    at pack (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:644:12)
+    at CoderTuple.encode (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:804:16)
+    at AbiCoder.encode (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:941:77)
+    at ABICoder.encodeParameters (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/web3/packages/web3-eth-abi/src/index.js:96:27)
+    at /Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/web3/packages/web3-eth-contract/src/index.js:426:24
+    at Array.map (<anonymous>)
+    at Object._encodeMethodABI (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/web3/packages/web3-eth-contract/src/index.js:425:12)
+    at withdraw (/Users/admin/project/webExample/finance-pro/etz_with_pro/api/withdraw.js:19:105)
+  reason: 'invalid number value',
+  code: 'INVALID_ARGUMENT',
+  arg: 'value',
+  coderType: 'uint256',
+  value: NaN }
+[2019-07-16T14:18:46.204] [ERROR] default - withdraw 2019-7-16 14:18:46 { Error: invalid number value (arg="value", coderType="uint256", value=null, version=4.0.30)
+    at Object.throwError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/errors.js:76:17)
+    at CoderNumber.encode (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:393:20)
+    at /Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:645:59
+    at Array.forEach (<anonymous>)
+    at pack (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:644:12)
+    at CoderTuple.encode (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:804:16)
+    at AbiCoder.encode (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/ethers/utils/abi-coder.js:941:77)
+    at ABICoder.encodeParameters (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/web3/packages/web3-eth-abi/src/index.js:96:27)
+    at /Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/web3/packages/web3-eth-contract/src/index.js:426:24
+    at Array.map (<anonymous>)
+    at Object._encodeMethodABI (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/web3/packages/web3-eth-contract/src/index.js:425:12)
+    at withdraw (/Users/admin/project/webExample/finance-pro/etz_with_pro/api/withdraw.js:20:72)
+  reason: 'invalid number value',
+  code: 'INVALID_ARGUMENT',
+  arg: 'value',
+  coderType: 'uint256',
+  value: NaN }
+[2019-07-16T14:32:57.904] [ERROR] default - withdraw 2019-7-16 14:32:57 { DatabaseError [SequelizeDatabaseError]: Unknown column 'NaN' in 'field list'
+    at Query.formatError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:247:16)
+    at Query.handler [as onResult] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:68:23)
+    at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:30:14)
+    at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+    at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+    at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+    at Socket.emit (events.js:193:13)
+    at addChunk (_stream_readable.js:295:12)
+    at readableAddChunk (_stream_readable.js:276:11)
+    at Socket.Readable.push (_stream_readable.js:231:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+  name: 'SequelizeDatabaseError',
+  parent:
+   { Error: Unknown column 'NaN' in 'field list'
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_BAD_FIELD_ERROR',
+     errno: 1054,
+     sqlState: '42S22',
+     sqlMessage: "Unknown column 'NaN' in 'field list'",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258777895,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" },
+  original:
+   { Error: Unknown column 'NaN' in 'field list'
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_BAD_FIELD_ERROR',
+     errno: 1054,
+     sqlState: '42S22',
+     sqlMessage: "Unknown column 'NaN' in 'field list'",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258777895,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" },
+  sql:
+   "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258777895,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" }
+[2019-07-16T14:35:21.181] [ERROR] default - withdraw 2019-7-16 14:35:21 { DatabaseError [SequelizeDatabaseError]: Unknown column 'NaN' in 'field list'
+    at Query.formatError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:247:16)
+    at Query.handler [as onResult] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:68:23)
+    at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:30:14)
+    at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+    at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+    at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+    at Socket.emit (events.js:193:13)
+    at addChunk (_stream_readable.js:295:12)
+    at readableAddChunk (_stream_readable.js:276:11)
+    at Socket.Readable.push (_stream_readable.js:231:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+  name: 'SequelizeDatabaseError',
+  parent:
+   { Error: Unknown column 'NaN' in 'field list'
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_BAD_FIELD_ERROR',
+     errno: 1054,
+     sqlState: '42S22',
+     sqlMessage: "Unknown column 'NaN' in 'field list'",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258921169,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" },
+  original:
+   { Error: Unknown column 'NaN' in 'field list'
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_BAD_FIELD_ERROR',
+     errno: 1054,
+     sqlState: '42S22',
+     sqlMessage: "Unknown column 'NaN' in 'field list'",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258921169,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" },
+  sql:
+   "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258921169,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" }
+[2019-07-16T14:35:53.178] [ERROR] default - withdraw 2019-7-16 14:35:53 { DatabaseError [SequelizeDatabaseError]: Unknown column 'NaN' in 'field list'
+    at Query.formatError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:247:16)
+    at Query.handler [as onResult] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:68:23)
+    at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:30:14)
+    at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+    at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+    at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+    at Socket.emit (events.js:193:13)
+    at addChunk (_stream_readable.js:295:12)
+    at readableAddChunk (_stream_readable.js:276:11)
+    at Socket.Readable.push (_stream_readable.js:231:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+  name: 'SequelizeDatabaseError',
+  parent:
+   { Error: Unknown column 'NaN' in 'field list'
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_BAD_FIELD_ERROR',
+     errno: 1054,
+     sqlState: '42S22',
+     sqlMessage: "Unknown column 'NaN' in 'field list'",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258953170,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" },
+  original:
+   { Error: Unknown column 'NaN' in 'field list'
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_BAD_FIELD_ERROR',
+     errno: 1054,
+     sqlState: '42S22',
+     sqlMessage: "Unknown column 'NaN' in 'field list'",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258953170,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" },
+  sql:
+   "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258953170,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" }
+[2019-07-16T14:36:16.054] [ERROR] default - withdraw 2019-7-16 14:36:16 { DatabaseError [SequelizeDatabaseError]: Unknown column 'NaN' in 'field list'
+    at Query.formatError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:247:16)
+    at Query.handler [as onResult] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/sequelize/lib/dialects/mysql/query.js:68:23)
+    at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:30:14)
+    at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+    at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+    at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+    at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+    at Socket.emit (events.js:193:13)
+    at addChunk (_stream_readable.js:295:12)
+    at readableAddChunk (_stream_readable.js:276:11)
+    at Socket.Readable.push (_stream_readable.js:231:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+  name: 'SequelizeDatabaseError',
+  parent:
+   { Error: Unknown column 'NaN' in 'field list'
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_BAD_FIELD_ERROR',
+     errno: 1054,
+     sqlState: '42S22',
+     sqlMessage: "Unknown column 'NaN' in 'field list'",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258976045,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" },
+  original:
+   { Error: Unknown column 'NaN' in 'field list'
+       at Packet.asError (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packets/packet.js:684:17)
+       at Query.execute (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/commands/command.js:28:26)
+       at Connection.handlePacket (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:449:32)
+       at PacketParser.Connection.packetParser.p [as onPacket] (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:72:12)
+       at PacketParser.executeStart (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/packet_parser.js:75:16)
+       at Socket.Connection.stream.on.data (/Users/admin/project/webExample/finance-pro/etz_with_pro/node_modules/mysql2/lib/connection.js:79:25)
+       at Socket.emit (events.js:193:13)
+       at addChunk (_stream_readable.js:295:12)
+       at readableAddChunk (_stream_readable.js:276:11)
+       at Socket.Readable.push (_stream_readable.js:231:10)
+       at TCP.onStreamRead (internal/stream_base_commons.js:150:17)
+     code: 'ER_BAD_FIELD_ERROR',
+     errno: 1054,
+     sqlState: '42S22',
+     sqlMessage: "Unknown column 'NaN' in 'field list'",
+     sql:
+      "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258976045,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" },
+  sql:
+   "INSERT INTO `withdraw_data` (`e_id`,`timestamps`,`txhash`,`endtime`,`state`,`valuex`,`address`,`type`,`user_id`,`data`) VALUES (NULL,1563258976045,'0x000',0,0,NaN,'0xed5a84260337f2b5db585206eccbf2fdaf43d263',1,361,'0xa9059cbb000000000000000000000000ed5a84260337f2b5db585206eccbf2fdaf43d2630000000000000000000000000000000000000000000000000000000000000064');" }
+[2019-07-16T18:18:31.836] [ERROR] default - withdraw 2019-7-16 18:18:31 ReferenceError: value is not defined
+    at withdraw (/Users/admin/project/webExample/finance-pro/send-pro/api/withdraw.js:15:20)
+[2019-07-16T18:35:02.075] [ERROR] default - withdraw TypeError: Cannot read property 'getObjParams' of undefined
+    at withdraw (/Users/admin/project/webExample/finance-pro/send-pro/api/withdraw.js:5:26)
+    at Layer.handle [as handle_request] (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:275:10)
+    at /Users/admin/project/webExample/finance-pro/send-pro/routes/api.js:16:3
+    at Layer.handle [as handle_request] (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:317:13)
+    at /Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:284:7
+    at Function.process_params (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:275:10)
+    at Function.handle (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:174:3)
+    at router (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:317:13)
+    at /Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:284:7
+    at Function.process_params (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:275:10)
+    at /Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:635:15
+    at next (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:260:14)
+    at Function.handle (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:174:3)
+    at router (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:317:13)
+    at /Users/admin/project/webExample/finance-pro/send-pro/node_modules/express/lib/router/index.js:284:7
