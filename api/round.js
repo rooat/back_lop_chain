@@ -8,6 +8,10 @@ let pagesize = 5;
 
 exports.index =async function (req, res) {
     let phenixId = req.query.phenixId;
+    let result = req.query.result;
+    if(!result){
+        result = "ok"
+    }
     let page = req.query.page ? req.query.page : 1; //获取当前页数，如果没有则为1
     let url = req.originalUrl; //获取当前url，并把url中page参数过滤掉
     url = url.replace(/([?&]*)page=([0-9]+)/g, '');
@@ -19,7 +23,10 @@ exports.index =async function (req, res) {
     let ps = (page-1)*pagesize;
     let list = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(pagesize).skip(ps);
     let count = await config.Round.countDocuments();
+    let blockNumber = await config.web3.eth.getBlockNumber();
     res.render('round', {
+            result:result,
+            block_number:blockNumber,
             roundlist: list,
             phenixId : phenixId,
             page: showPage.show(url, count, pagesize, page),
@@ -34,11 +41,12 @@ exports.add_anounceNextRound = async function(req , res){
     let endBlock = req.body.endBlock;
     let reInvestRate = req.body.reInvestRate;
     let round_arr = await config.Round.find({state:{$eq:0}});
+    let result = "等待上一轮次结束中..."
     if(phenixId && round_arr && round_arr.length==0 ){
         let anounceNextRound_data = anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId);
         let tx_id = await saveTransaction(req ,anounceNextRound_data );
         console.log("====phenixId",phenixId)
-        let max_level = await config.Round.find().sort({"level":-1}).limit(1);
+        let max_level = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(1);
         let level =0;
         if(max_level && max_level.length>0){
             level = max_level[0].level;
@@ -54,7 +62,7 @@ exports.add_anounceNextRound = async function(req , res){
               reInvest: 1,
               endBlock: endBlock,
               reInvestRate: reInvestRate,
-              deployState: "-1",
+              deployState: 0,
               deployTime : ""
         }).save();
         
@@ -63,50 +71,69 @@ exports.add_anounceNextRound = async function(req , res){
             txId : tx_id,
             type : "anounceNextRound"
         }).save()
+        result = "创建成功..."
+        return res.send({"resp":"success"})
     }
-    
-    res.redirect('/round?phenixId='+phenixId);
+    return res.send({"resp":"failure"})
 }
 
 exports.add_startNextRound = async function(req , res){
     let _id = req.query.id;
     let rounds = await config.Round.findOne({_id:_id});
-    let startNextRound_data = startNextRound(rounds.phenix,rounds.endBlock);
-    let tx_id = await saveTransaction(req , startNextRound_data);
-    await config.Round.update({_id:_id},{$set:{"state":0,"deployState":0,"deployTime":Date.now()}})
+    let task = await config.Task.findOne({"refId":_id});
     let phenixId = rounds.phenix;
-    await config.Task({
-        refId : _id,
-        txId : tx_id,
-        type : "startNextRound"
-    }).save()
-    res.redirect('/round?phenixId='+phenixId);
+    let result ="等待Round创建成功..."
+    if(task){
+        let tx_id = task.txId;
+        let txtr  = await config.Transaction.findOne({"_id":tx_id});
+        if(txtr.state==2){
+            let startNextRound_data = startNextRound(phenixId,rounds.endBlock);
+            let tx_id = await saveTransaction(req , startNextRound_data);
+            await config.Round.update({_id:_id},{$set:{"state":0,"deployState":0,"deployTime":Date.now()}})
+            
+            await config.Task({
+                refId : _id,
+                txId : tx_id,
+                type : "startNextRound"
+            }).save()
+            result = "开启成功"
+        }
+    }
+    
+    res.redirect('/round?phenixId='+phenixId,{
+        result : result
+    });
 }
 exports.add_currentRoundSucceed = async function(req , res){
     let _id = req.query.id;
+    let phenixId = req.query.phenixId;
     let rounds = await config.Round.findOne({_id:_id});
     let level = rounds.level;
-    let max = await config.Round.find({"state":{ $ne: null }}).sort({"level":-1}).limit(1);
-    let current_block = await config.web3.eth.getBlockNumber();
-    console.log("current_block==",current_block)
-    let data ="";
-    let state = 0
-    if(level==Number(max[0].level) && (Number(rounds.endBlock) < Number(current_block) || Number(rounds.goal)==Number(rounds.totalInvest))){
-        data =  currentRoundSucceed(rounds.phenix);
-        state = 1;
-    }else{
-        data =  currentRoundFail(rounds.phenix)
-        state = 3;
+    // let latest_round = await config.Round.findOne({"state": 0,"phenix":phenixId});
+    if(rounds.state && rounds.state == 0 && rounds.deployState==0) {
+        let current_block = await config.web3.eth.getBlockNumber();
+        let data ="";
+        let state = 0
+        let type ;
+        if(Number(rounds.goal)==Number(rounds.totalInvest)){
+            data =  currentRoundSucceed(rounds.phenix);
+            state = 1;
+            type ="currentRoundSucceed"
+        }else  if(rounds.endBlock<current_block){
+            data =  currentRoundFail(rounds.phenix)
+            state = 3;
+            type="currentRoundFail"
+        }
+        let tx_id = await saveTransaction(req , data);
+        await config.Round.update({_id:_id},{$set:{"deployState":state}})
+        let phenixId = rounds.phenix;
+        await config.Task({
+            refId : _id,
+            txId : tx_id,
+            type :type 
+        }).save()
     }
     
-    let tx_id = await saveTransaction(req , data);
-    await config.Round.update({_id:_id},{$set:{"deployState":state}})
-    let phenixId = rounds.phenix;
-    await config.Task({
-        refId : _id,
-        txId : tx_id,
-        type : "startNextRound"
-    }).save()
     res.redirect('/round?phenixId='+phenixId);
 }
 
