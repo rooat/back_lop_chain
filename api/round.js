@@ -8,10 +8,7 @@ let pagesize = 5;
 
 exports.index =async function (req, res) {
     let phenixId = req.query.phenixId;
-    let result = req.query.result;
-    if(!result){
-        result = "ok"
-    }
+   
     let page = req.query.page ? req.query.page : 1; //获取当前页数，如果没有则为1
     let url = req.originalUrl; //获取当前url，并把url中page参数过滤掉
     url = url.replace(/([?&]*)page=([0-9]+)/g, '');
@@ -25,7 +22,6 @@ exports.index =async function (req, res) {
     let count = await config.Round.countDocuments();
     let blockNumber = await config.web3.eth.getBlockNumber();
     res.render('round', {
-            result:result,
             block_number:blockNumber,
             roundlist: list,
             phenixId : phenixId,
@@ -41,7 +37,6 @@ exports.add_anounceNextRound = async function(req , res){
     let endBlock = req.body.endBlock;
     let reInvestRate = req.body.reInvestRate;
     let round_arr = await config.Round.find({state:{$eq:0}});
-    let result = "等待上一轮次结束中..."
     if(phenixId && round_arr && round_arr.length==0 ){
         let anounceNextRound_data = anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId);
         let tx_id = await saveTransaction(req ,anounceNextRound_data );
@@ -71,7 +66,6 @@ exports.add_anounceNextRound = async function(req , res){
             txId : tx_id,
             type : "anounceNextRound"
         }).save()
-        result = "创建成功..."
         return res.send({"resp":"success"})
     }
     return res.send({"resp":"failure"})
@@ -82,7 +76,6 @@ exports.add_startNextRound = async function(req , res){
     let rounds = await config.Round.findOne({_id:_id});
     let task = await config.Task.findOne({"refId":_id});
     let phenixId = rounds.phenix;
-    let result ="等待Round创建成功..."
     if(task){
         let tx_id = task.txId;
         let txtr  = await config.Transaction.findOne({"_id":tx_id});
@@ -96,13 +89,10 @@ exports.add_startNextRound = async function(req , res){
                 txId : tx_id,
                 type : "startNextRound"
             }).save()
-            result = "开启成功"
         }
     }
     
-    res.redirect('/round?phenixId='+phenixId,{
-        result : result
-    });
+    res.redirect('/round?phenixId='+phenixId);
 }
 exports.add_currentRoundSucceed = async function(req , res){
     let _id = req.query.id;
