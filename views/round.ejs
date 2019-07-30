@@ -64,23 +64,23 @@
                     </td>
                     <td>
                                 <% if(value['deployState']==0){ %>
-                                        <button type="button" class="btn btn-warning" disabled="disabled">
-                                        已开启
-                                    </button>
-                                        <button type="button" class="btn btn-warning" onclick="window.location.href='/add_currentRoundSucceed?id=<%=value['_id']%>';return false;">
-                                            结束
+                                    <button type="button" class="btn btn-warning" onclick="add_startNextRound('<%= value['_id']%>')">
+                                        开启
                                     </button>
                                 <% }else if(value['deployState']==1 ||value['deployState']==3){ %>
                                         <button type="button" class="btn btn-warning" disabled="disabled">
                                         已结束
                                     </button>
-
                                 <% }else { %>
-                                        <button type="button" class="btn btn-warning" onclick="window.location.href='/add_startNextRound?id=<%=value['_id']%>';return false;">
-                                        开启
-                                    </button>
+                                    <button type="button" class="btn btn-warning" disabled="disabled">
+                                        已开启
+                                        </button>
+                                            <button type="button" class="btn btn-warning" onclick="add_currentRoundSucceed('<%= value['_id']%>')">
+                                                结束
+                                        </button> 
                                 <% } %>
-                            </td>
+
+                       </td>
                 </tr>
                 <% }) %>
                 </tbody>
@@ -177,16 +177,18 @@
      let minInvest = $("#minInvest").val();
      let reInvestRate = $("#reInvestRate").val();
      let endBlock = $("#endBlock").val();
+     let phenixId = $("#phenixId").val();
      $.get("/latest_blocknumber",{}).then(function(res){
         let block = Number(res.resp);
         if(maxInvest && maxInvest>0&& minInvest && minInvest>0 && reInvestRate && endBlock && endBlock>block){
             axios.post("/add_anounceNextRound",{
+                "phenixId":phenixId,
                 "endBlock":endBlock,
                 "maxInvest":maxInvest,
                 "minInvest":minInvest,
                 "reInvestRate":reInvestRate
             }).then(function(){
-                let phenixId = $("#phenixId").val();
+                
                 window.location.href="/round?phenixId="+phenixId
             })
         }
@@ -194,5 +196,17 @@
         return false;
         
     }) 
-} 
+}
+function add_startNextRound (id){
+    let phenixId = $("#phenixId").val();
+    axios.post('/add_startNextRound',{"id":id}).then(function (res){
+        window.location.href="/round?phenixId="+phenixId 
+    })
+}
+function add_currentRoundSucceed(id){
+    let phenixId = $("#phenixId").val();
+    axios.post('/add_currentRoundSucceed',{"id":id,"phenixId":phenixId}).then(function (res){
+        window.location.href="/round?phenixId="+phenixId 
+    }) 
+}
 </script>

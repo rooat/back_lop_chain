@@ -36,8 +36,8 @@ router.get('/phenix',phenix.index);
 router.post('/add_startNewPhenix',phenix.add_startNewPhenix);
 
 router.get('/round',round.index);
-router.get('/add_startNextRound',round.add_startNextRound);
-router.get('/add_currentRoundSucceed',round.add_currentRoundSucceed);
+router.post('/add_startNextRound',round.add_startNextRound);
+router.post('/add_currentRoundSucceed',round.add_currentRoundSucceed);
 router.post('/add_anounceNextRound',round.add_anounceNextRound);
 
 router.get('/notice',notice.index);
