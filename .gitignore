@@ -2,3 +2,4 @@
 /node_modules/
 ./lop/node_modules/
 bin/www
+/logs/
