@@ -152,7 +152,7 @@ function startNewPhenix(startGoal){
                     }]
                 }, [startGoal]);
     return data;
-}
+} 
 function startNextRound(phenixIndex,endBlock){
     let data =   config.web3.eth.abi.encodeFunctionCall({
         name: "startNextRound",

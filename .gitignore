@@ -1,3 +1,4 @@
 ##ignore this file##
 /node_modules/
 ./lop/node_modules/
+bin/www

@@ -1,4 +1,4 @@
-const ABI = [
+[
 	{
 		"constant": false,
 		"inputs": [
@@ -683,22 +683,22 @@ const ABI = [
 		"inputs": [
 			{
 				"indexed": false,
-				"name": "",
+				"name": "user",
 				"type": "address"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "index",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "inviteCode",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "inviterCode",
 				"type": "uint256"
 			}
 		],
@@ -710,22 +710,17 @@ const ABI = [
 		"inputs": [
 			{
 				"indexed": false,
-				"name": "",
+				"name": "user",
 				"type": "address"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "index",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "",
+				"name": "amount",
 				"type": "uint256"
 			}
 		],
@@ -737,17 +732,17 @@ const ABI = [
 		"inputs": [
 			{
 				"indexed": false,
-				"name": "",
+				"name": "user",
 				"type": "address"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "index",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "amount",
 				"type": "uint256"
 			}
 		],
@@ -759,32 +754,32 @@ const ABI = [
 		"inputs": [
 			{
 				"indexed": false,
-				"name": "",
+				"name": "user",
 				"type": "address"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "index",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "phenix",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "amount",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "round",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "joinRound",
 				"type": "uint256"
 			}
 		],
@@ -796,32 +791,32 @@ const ABI = [
 		"inputs": [
 			{
 				"indexed": false,
-				"name": "",
+				"name": "user",
 				"type": "address"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "index",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "phenix",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "amount",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "round",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "joinRound",
 				"type": "uint256"
 			}
 		],
@@ -833,22 +828,27 @@ const ABI = [
 		"inputs": [
 			{
 				"indexed": false,
-				"name": "",
+				"name": "user",
 				"type": "address"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "index",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "phenix",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"name": "",
+				"name": "roundIndex",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
 				"type": "uint256"
 			}
 		],
@@ -880,7 +880,3 @@ const ABI = [
 		"type": "event"
 	}
 ]
-
-module.exports = {
-	ABI: ABI,
-}
