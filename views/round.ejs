@@ -187,8 +187,11 @@
                 "maxInvest":maxInvest,
                 "minInvest":minInvest,
                 "reInvestRate":reInvestRate
-            }).then(function(){
-                
+            }).then(function(res){
+                if(res.data.resp!="success"){
+                    $("#errortip").html(res.data.resp) 
+                    return false;
+                }
                 window.location.href="/round?phenixId="+phenixId
             })
         }
@@ -200,13 +203,25 @@
 function add_startNextRound (id){
     let phenixId = $("#phenixId").val();
     axios.post('/add_startNextRound',{"id":id}).then(function (res){
-        window.location.href="/round?phenixId="+phenixId 
+        if(res.data.resp!='success'){
+            alert(res.resp)
+            return;
+        }else{
+            window.location.href="/round?phenixId="+phenixId 
+        }
+        
     })
 }
 function add_currentRoundSucceed(id){
     let phenixId = $("#phenixId").val();
     axios.post('/add_currentRoundSucceed',{"id":id,"phenixId":phenixId}).then(function (res){
-        window.location.href="/round?phenixId="+phenixId 
+        if(res.data.resp!='success'){
+            alert(res.data.resp)
+            return;
+        }else{
+            window.location.href="/round?phenixId="+phenixId 
+        }
+        
     }) 
 }
 </script>

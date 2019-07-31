@@ -36,35 +36,38 @@ exports.add_anounceNextRound = async function(req , res){
     let minInvest = req.body.minInvest;
     let endBlock = req.body.endBlock;
     let reInvestRate = req.body.reInvestRate;
-    let round_arr = await config.Round.find({state:{$eq:0}});
-    if(phenixId && round_arr && round_arr.length==0 ){
-        let anounceNextRound_data = anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId);
-        let tx_id = await saveTransaction(req ,anounceNextRound_data );
-        let max_level = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(1);
-        let level =0;
-        if(max_level && max_level.length>0){
-            level = max_level[0].level;
-            level = Number(level)+1;
+    let round = await config.Round.findOne({state:0,phenix:phenixId});
+    if(phenixId && maxInvest && minInvest && endBlock && reInvestRate ){
+        if(!round){
+            let anounceNextRound_data = anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId);
+            let tx_id = await saveTransaction(req ,anounceNextRound_data );
+            let max_level = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(1);
+            let level =0;
+            if(max_level && max_level.length>0){
+                level = max_level[0].level;
+                level = Number(level)+1;
+            }
+            let round = await config.Round({
+                phenix: phenixId,
+                level: level,
+                maxInvest: maxInvest,
+                minInvest: minInvest,
+                endBlock: endBlock,
+                reInvestRate: reInvestRate,
+                deployState: 0,
+                deployTime : ""
+            }).save();
+            
+            await config.Task({
+                refId : round._id,
+                txId : tx_id,
+                type : "anounceNextRound"
+            }).save()
+            return res.send({"resp":"success"})
         }
-        let round = await config.Round({
-              phenix: phenixId,
-              level: level,
-              maxInvest: maxInvest,
-              minInvest: minInvest,
-              endBlock: endBlock,
-              reInvestRate: reInvestRate,
-              deployState: 0,
-              deployTime : ""
-        }).save();
-        
-        await config.Task({
-            refId : round._id,
-            txId : tx_id,
-            type : "anounceNextRound"
-        }).save()
-        return res.send({"resp":"success"})
+        return res.send({"resp":"有未结束Round"})
     }
-    return res.send({"resp":"failure"})
+    return res.send({"resp":"Params Invalid"})
 }
 
 exports.add_startNextRound = async function(req , res){
@@ -123,6 +126,7 @@ exports.add_currentRoundSucceed = async function(req , res){
             }).save()
             return res.send({"resp":"success"})
         }
+        return res.send({"resp":"开启中..."})
     }
     return res.send({"resp":"failure"});
   }

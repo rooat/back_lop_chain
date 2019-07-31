@@ -20,8 +20,8 @@ var sender = "0xdCb25d3710645C2fe3Fd7e04601De50bD54ed124";
 
 var Web3 = require('web3');
 var net = require('net');
-var web3 = new Web3('/home/ubuntu/.etherzero/geth.ipc', net);
-//var web3 = new Web3('http://etzrpc.org');
+ var web3 = new Web3('/home/ubuntu/.etherzero/geth.ipc', net);
+// var web3 = new Web3('http://etzrpc.org');
 
 module.exports = {
 
