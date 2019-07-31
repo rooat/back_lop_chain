@@ -47,12 +47,10 @@
                             进行中
                         <% }else if(value['state']==1 ||value['deployState']==1){ %>
                             成功
-                        <% }else if(value['deployState']==2){ %>
-                            可提款
                         <% }else if(value['state']==3 || value['deployState']==3){ %>
                             失败
                         <% }else{ %>
-                            待开启
+                            --
                         <% } %>
                     </td>
                     <td><%= value['reInvestRate'] %></td>
