@@ -70,11 +70,11 @@ exports.add_anounceNextRound = async function(req , res){
                     txId : tx_id,
                     type : "anounceNextRound"
                 }).save()
-                return res.send({"resp":"success"})
+                return res.send({"resp":"success"});
             }
-            return res.send({"resp":"有未结束Round"})
+            return res.send({"resp":"有未结束Round"});
         }
-        return res.send({"resp":"该仓位已结束，请创建新仓位，并开始轮次 ！"})
+        return res.send({"resp":"该仓位已结束，请创建新仓位，并开始轮次 ！"});
     }
     return res.send({"resp":"Params Invalid"})
 }
