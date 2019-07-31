@@ -140,7 +140,7 @@ exports.add_currentRoundSucceed = async function(req , res){
             }).save()
             return res.send({"resp":"success"})
         }
-        return res.send({"resp":"开启中..."})
+        return res.send({"resp":"暂时无法结束，请稍后..."})
     }
     return res.send({"resp":"failure"});
   }
