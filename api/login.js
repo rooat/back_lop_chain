@@ -15,6 +15,7 @@ exports.Plogin =async function (req, res) {
             res.cookie('token', 888888, {maxAge: 60 * 1000 * 60 * 24 * 7});
             res.clearCookie('login_error');
             res.redirect('/home');
+            return;
 	    } else {
             if (req.cookies.login_error) {
                 res.cookie('login_error', parseInt(req.cookies.login_error) + 1, {maxAge: 60 * 1000 * 60 * 24 * 7});
@@ -23,8 +24,11 @@ exports.Plogin =async function (req, res) {
             }
 
             res.redirect('/login');
+            return;
         }
     }
+    res.redirect('/login');
+    return;
     
 };
 
