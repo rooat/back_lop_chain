@@ -36,35 +36,45 @@ exports.add_anounceNextRound = async function(req , res){
     let minInvest = req.body.minInvest;
     let endBlock = req.body.endBlock;
     let reInvestRate = req.body.reInvestRate;
-    let round = await config.Round.findOne({state:0,phenix:phenixId});
+    let count = await config.Round.countDocuments({phenix:phenixId});
+    
     if(phenixId && maxInvest && minInvest && endBlock && reInvestRate ){
-        if(!round){
-            let anounceNextRound_data = anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId);
-            let tx_id = await saveTransaction(req ,anounceNextRound_data );
-            let max_level = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(1);
-            let level =0;
-            if(max_level && max_level.length>0){
-                level = max_level[0].level;
-                level = Number(level)+1;
-            }
-            let round = await config.Round({
-                phenix: phenixId,
-                level: level,
-                maxInvest: maxInvest,
-                minInvest: minInvest,
-                endBlock: endBlock,
-                reInvestRate: reInvestRate,
-                deployState: 0,
-            }).save();
-            
-            await config.Task({
-                refId : round._id,
-                txId : tx_id,
-                type : "anounceNextRound"
-            }).save()
-            return res.send({"resp":"success"})
+        if(Number(reInvestRate)>0 && count<2){
+            return res.send({"resp":"前两轮，reInvestRate 该值需为0"})
         }
-        return res.send({"resp":"有未结束Round"})
+        let isValidPhenix = await config.Round.findOne({"phenix":phenixId,"state":3})
+        if(!isValidPhenix){
+
+            let round = await config.Round.findOne({state:0,phenix:phenixId});
+            if(!round){
+                let anounceNextRound_data = anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId);
+                let tx_id = await saveTransaction(req ,anounceNextRound_data );
+                let max_level = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(1);
+                let level =0;
+                if(max_level && max_level.length>0){
+                    level = max_level[0].level;
+                    level = Number(level)+1;
+                }
+                let round = await config.Round({
+                    phenix: phenixId,
+                    level: level,
+                    maxInvest: maxInvest,
+                    minInvest: minInvest,
+                    endBlock: endBlock,
+                    reInvestRate: reInvestRate,
+                    deployState: 0,
+                }).save();
+                
+                await config.Task({
+                    refId : round._id,
+                    txId : tx_id,
+                    type : "anounceNextRound"
+                }).save()
+                return res.send({"resp":"success"})
+            }
+            return res.send({"resp":"有未结束Round"})
+        }
+        return res.send({"resp":"该仓位已结束，请创建新仓位，并开始轮次 ！"})
     }
     return res.send({"resp":"Params Invalid"})
 }
