@@ -106,6 +106,18 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="testmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p style="font-size: 20px">
+                    仓位创建中...
+                </p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="findSms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -118,10 +130,11 @@
 </div>
 <%- include footer %>
 <script type="text/javascript">
+   
+    
   function roundManBtn(phenixId){
       if(!phenixId){
-          alert("仓位创建中...")
-          return;
+        $("#testmodal").modal("toggle")
       }else{
           window.location.href="/round?phenixId="+phenixId;
       }
