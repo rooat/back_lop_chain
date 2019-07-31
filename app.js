@@ -5,7 +5,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/api');
-var routes_public = require('./routes/api_public');
+//var routes_public = require('./routes/api_public');
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +24,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 /* 中间件,判断用户是否登录 */
-app.use('/', routes_public);
+//app.use('/', routes_public);
 app.use(function (req, res, next) {
     if (req.url != '/login' && req.session.user === undefined) {
         res.redirect('/login');

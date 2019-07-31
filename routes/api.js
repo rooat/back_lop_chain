@@ -5,6 +5,7 @@ var phenix = require('../api/phenix')
 var round = require('../api/round')
 var notice = require('../api/notice');
 var user = require('../api/user')
+var common = require('../api/common')
 
 var auth = function (req, res, next) {
 	if (req.session && req.session.isLogged) {
@@ -39,6 +40,7 @@ router.get('/round',round.index);
 router.post('/add_startNextRound',round.add_startNextRound);
 router.post('/add_currentRoundSucceed',round.add_currentRoundSucceed);
 router.post('/add_anounceNextRound',round.add_anounceNextRound);
+router.post('/update_block',round.edit_block);
 
 router.get('/notice',notice.index);
 router.post('/add_notice',notice.add);
@@ -51,5 +53,7 @@ router.post('/addUser', user.add);
 router.get('/editUser', user.edit);
 router.post('/updateUser', user.update);
 router.get('/delUser', user.delete);
+
+router.get('/latest_blocknumber',common.getBlockNumber);
 
 module.exports = router;

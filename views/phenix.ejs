@@ -60,7 +60,7 @@
                     </td>
                     <td><%=  new Date(value['createAt']).getFullYear()+'-'+new Date(value['createAt']).getMonth()+'-'+new Date(value['createAt']).getDate() %></td>
                     <td>
-                                <button type="button" class="btn btn-warning" onclick="window.location.href='/round?phenixId=<%=value['phenixId']%>';return false;">
+                                <button type="button" class="btn btn-warning" onclick="roundManBtn('<%=value['phenixId']%>')">
                                      轮次管理
                                 </button>
                             </td>
@@ -118,12 +118,12 @@
 </div>
 <%- include footer %>
 <script type="text/javascript">
-    function formatTime(data){
-    	let date = new Date(data);
-    	let year = date.getFullYear();
-    	let month = date.getMonth();
-    	let day = date.getDate();
-    	return year+"-"+month+"-"+day
-
-    }
+  function roundManBtn(phenixId){
+      if(!phenixId){
+          alert("仓位创建中...")
+          return;
+      }else{
+          window.location.href="/round?phenixId="+phenixId;
+      }
+  } 
 </script>

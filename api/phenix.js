@@ -26,65 +26,25 @@ exports.index =async function (req, res) {
 
 exports.add_startNewPhenix = async function(req , res){
     let startGoal = req.body.startGoal;
-    let ph_arr = await config.Phenix.find({"phenixId":{$eq:null}});
-    if(!ph_arr || ph_arr.length==0){
-        let startNewPhenix_data = startNewPhenix(startGoal);
-        let tx_id = await saveTransaction(req , startNewPhenix_data);
-        let phenix = await config.Phenix({
-            phenixId: "",
-            roundNumber: "",
-            startGoal: startGoal,
-            refundRate: "",
-            isCreated: false,
-            state:""
-        }).save()
-        await config.Task({
-            refId : phenix._id,
-            txId : tx_id,
-            type : "startNewPhenix"
-        }).save()
-    }
+    let startNewPhenix_data = startNewPhenix(startGoal);
+    let tx_id = await saveTransaction(req , startNewPhenix_data);
+    let phenix = await config.Phenix({
+        phenixId: "",
+        roundNumber: "",
+        startGoal: startGoal,
+        refundRate: "",
+        isCreated: false,
+        state:""
+    }).save()
+    await config.Task({
+        refId : phenix._id,
+        txId : tx_id,
+        type : "startNewPhenix"
+    }).save()
     
     res.redirect('/phenix');
 }
-exports.add_startNextRound = async function(req , res){
-    let phenixIndex = req.body.phenixIndex;
-    let endBlock  = req.body.endBlock;
 
-    let startNextRound_data = startNextRound(phenixIndex,endBlock);
-    let tx_id = await saveTransaction(req , startNextRound_data);
-    let round = await config.Round.findOne({phenix:phenixIndex,endBlock:endBlock});
-    
-    await config.Task({
-        refId : round._id,
-        txId : tx_id,
-        type : "startNextRound"
-    }).save()
-    res.redirect('/phenix');
-}
-exports.add_anounceNextRound = async function(req , res){
-    let phenixId = req.body.phenixId;
-    let maxInvest = req.body.maxInvest;
-    let minInvest = req.body.minInvest;
-    let endBlock = req.body.endBlock;
-    let reInvestRate = req.body.reInvestRate;
-    let anounceNextRound_data = anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId);
-    let tx_id = await saveTransaction(req ,anounceNextRound_data );
-    let round = await config.Round({
-        phenix : phenixId,
-        maxInvest : maxInvest,
-        minInvest : minInvest,
-        endBlock : endBlock,
-        reInvestRate : reInvestRate
-    }).save();
-    
-    await config.Task({
-        refId : round._id,
-        txId : tx_id,
-        type : "anounceNextRound"
-    }).save()
-    res.redirect('/phenix');
-}
 
 
 exports.edit = function (req, res) {
@@ -153,45 +113,3 @@ function startNewPhenix(startGoal){
                 }, [startGoal]);
     return data;
 } 
-function startNextRound(phenixIndex,endBlock){
-    let data =   config.web3.eth.abi.encodeFunctionCall({
-        name: "startNextRound",
-        type: 'function',
-        inputs: [{
-                    "name": "phenixIndex",
-                    "type": "uint256"
-                },
-                {
-                    "name": "endBlock",
-                    "type": "uint256"
-                }]
-            }, [phenixIndex,endBlock]);
-    return data;
-}
-function anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId){
-    let data = config.web3.eth.abi.encodeFunctionCall({
-        name: "anounceNextRound",
-        type: 'function',
-        inputs: [{
-                "name": "max",
-                "type": "uint256"
-                },
-                {
-                    "name": "min",
-                    "type": "uint256"
-                },
-                {
-                    "name": "endBlock",
-                    "type": "uint256"
-                },
-                {
-                    "name": "reInvestRate",
-                    "type": "uint256"
-                },
-                {
-                    "name": "phenixIndex",
-                    "type": "uint256"
-                }]
-            }, [maxInvest,minInvest,endBlock,reInvestRate,phenixId]);
-    return data
-}

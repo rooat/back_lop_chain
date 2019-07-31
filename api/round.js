@@ -55,7 +55,6 @@ exports.add_anounceNextRound = async function(req , res){
                 endBlock: endBlock,
                 reInvestRate: reInvestRate,
                 deployState: 0,
-                deployTime : ""
             }).save();
             
             await config.Task({
@@ -73,23 +72,28 @@ exports.add_anounceNextRound = async function(req , res){
 exports.add_startNextRound = async function(req , res){
     let _id = req.body.id;
     let rounds = await config.Round.findOne({_id:_id});
+   
     let task = await config.Task.findOne({"refId":_id});
     if(task && rounds){
         let phenixId = rounds.phenix
         let tx_id = task.txId;
-        let txtr  = await config.Transaction.findOne({"_id":tx_id});
-        if(txtr.state==2){
-            let startNextRound_data = startNextRound(phenixId,rounds.endBlock);
-            let tx_id = await saveTransaction(req , startNextRound_data);
-            await config.Round.update({_id:_id},{$set:{"state":0,"deployState":2,"deployTime":Date.now()}})
-            await config.Task({
-                refId : _id,
-                txId : tx_id,
-                type : "startNextRound"
-            }).save()
-            return res.send({"resp":"success"})
+        let current_block = await config.web3.eth.getBlockNumber();
+        if(rounds.endBlock>Number(current_block)){
+            let txtr  = await config.Transaction.findOne({"_id":tx_id});
+            if(txtr.state==2){
+                let startNextRound_data = startNextRound(phenixId,rounds.endBlock);
+                let tx_id = await saveTransaction(req , startNextRound_data);
+                await config.Round.update({_id:_id},{$set:{"state":0,"deployState":2,"deployTime":Date.now()}})
+                await config.Task({
+                    refId : _id,
+                    txId : tx_id,
+                    type : "startNextRound"
+                }).save()
+                return res.send({"resp":"success"})
+            }
+            return res.send({"resp":"Round创建中..."})
         }
-        return res.send({"resp":"Round创建中..."})
+        return res.send({"resp":"change_endblock"})
     }
     return res.send({"resp":"failure"});
 }
@@ -131,52 +135,19 @@ exports.add_currentRoundSucceed = async function(req , res){
     return res.send({"resp":"failure"});
   }
 
-
-exports.edit = function (req, res) {
-    let id = req.query.id; //获取当前页数，如果没有则为1
-
-    async.series({
-        one: function (done) {
-            test.index("select * from heshe_admin_role where id = "+id, function (list) {
-                done(null, list);
-            });
-        }
-    }, function (error, result) {
-        res.render('role_edit', {
-            role: result.one[0]
-        });
-    })
-};
-
-exports.update = function (req, res) {
+exports.edit_block = async function(req, res){
     let id = req.body.id;
-    let name = req.body.name;
-    let auths = req.body.auths;
-
-    async.series({
-        one: function (done) {
-            test.index("UPDATE `heshe_admin_role` SET `name` = '" + name + "',`auths` = '" + auths + "' WHERE `id` = " + id, function (list) {
-                done(null, list);
-            });
+    let block  = req.body.endBlock;
+    if(id&&block){
+        let round = await config.Round.findOne({"_id":id});
+        if(round){
+            await config.Round.update({"_id":id},{$set:{"endBlock":block}});
+            return res.send({"resp":"success"}); 
         }
-    }, function (error, result) {
-        res.redirect('/role');
-    });
-};
+    }
+    return res.send({"resp":"failure"})
+}
 
-exports.delete = function (req, res) {
-    let id = req.query.id;
-
-    async.series({
-        one: function (done) {
-            test.index("DELETE FROM `heshe_admin_role` WHERE `id` = " + id, function (list) {
-                done(null, list);
-            });
-        }
-    }, function (error, result) {
-        res.redirect('/role');
-    });
-};
 
 async function saveTransaction(req,data){
     let tx = await config.Transaction({
