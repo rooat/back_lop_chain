@@ -109,38 +109,38 @@ exports.add_startNextRound = async function(req , res){
 }
 exports.add_currentRoundSucceed = async function(req , res){
     let _id = req.body.id;
-    let phenixId = req.body.phenixId;
-    let rounds = await config.Round.findOne({_id:_id});
-    let level = rounds.level;
-    if( rounds.state == 0 && rounds.deployState==2) {
-        let current_block = await config.web3.eth.getBlockNumber();
-        let data ="";
-        let state = 0
-        let type ;
-        let flag = false
-        if(Number(rounds.goal)==Number(rounds.totalInvest)){
-            data =  currentRoundSucceed(rounds.phenix);
-            state = 1;
-            type ="currentRoundSucceed"
-            flag= true
-        }else  if(rounds.endBlock<current_block){
-            data =  currentRoundFail(rounds.phenix)
-            state = 3;
-            type="currentRoundFail"
-            flag=true
+    if(_id){
+        let rounds = await config.Round.findOne({_id:_id});
+        let phenixId = rounds.phenix;
+        if( rounds.state == 0 && rounds.deployState==2) {
+            let current_block = await config.web3.eth.getBlockNumber();
+            let data ="";
+            let state = 0
+            let type ;
+            let flag = false
+            if(Number(rounds.goal)==Number(rounds.totalInvest)){
+                data =  currentRoundSucceed(phenixId);
+                state = 1;
+                type ="currentRoundSucceed"
+                flag= true
+            }else  if(rounds.endBlock<current_block){
+                data =  currentRoundFail(phenixId)
+                state = 3;
+                type="currentRoundFail"
+                flag=true
+            }
+            if(flag){
+                let tx_id = await saveTransaction(req , data);
+                await config.Round.update({_id:_id},{$set:{"deployState":state}});
+                await config.Task({
+                    refId : _id,
+                    txId : tx_id,
+                    type :type 
+                }).save()
+                return res.send({"resp":"success"})
+            }
+            return res.send({"resp":"暂时无法结束，请稍后..."})
         }
-        if(flag){
-            let tx_id = await saveTransaction(req , data);
-            await config.Round.update({_id:_id},{$set:{"deployState":state}})
-            let phenixId = rounds.phenix;
-            await config.Task({
-                refId : _id,
-                txId : tx_id,
-                type :type 
-            }).save()
-            return res.send({"resp":"success"})
-        }
-        return res.send({"resp":"暂时无法结束，请稍后..."})
     }
     return res.send({"resp":"failure"});
   }
