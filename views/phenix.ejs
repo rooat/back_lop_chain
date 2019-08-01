@@ -60,10 +60,16 @@
                     </td>
                     <td><%=  new Date(value['createAt']).getFullYear()+'-'+new Date(value['createAt']).getMonth()+'-'+new Date(value['createAt']).getDate() %></td>
                     <td>
-                                <button type="button" class="btn btn-warning" onclick="roundManBtn('<%=value['phenixId']%>')">
-                                     轮次管理
-                                </button>
-                            </td>
+                        <% if(value['state']!=null){ %>
+                            <button type="button" class="btn btn-warning" onclick="roundManBtn('<%=value['phenixId']%>')">
+                                    轮次管理
+                            </button>
+                        <% }else{ %>
+                            <button type="button" class="btn btn-warning" disabled="disabled">
+                                    开启中...
+                            </button>
+                        <% } %>
+                    </td>
                 </tr>
                 <% }) %>
                 </tbody>

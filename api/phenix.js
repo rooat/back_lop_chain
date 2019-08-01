@@ -98,6 +98,7 @@ async function saveTransaction(req,data){
                     data : data,
                     sender : config.sender,
                     address : ContractAddr,
+                    priority : 4,
                 }).save()
     return tx._id;
 }
