@@ -16,7 +16,6 @@
                 <thead>
 	                <tr>
 	                    <th>phenixId</th>
-	                    <th>roundNumber</th>
 	                    <th>startGoal</th>
 	                    <th>refundRate</th>
 	                    <th>state</th>
@@ -34,13 +33,7 @@
                             <%= value['phenixId']%>
                         <% } %>
                     </td>
-                    <td>
-                        <% if(value['roundNumber']==null){ %>
-                            --
-                        <% }else{ %>
-                            <%= value['roundNumber']%>
-                        <% } %>
-                    </td>
+                    
                     <td>
                         <%= value['startGoal']%>
                     </td>
