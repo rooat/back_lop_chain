@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 var web3 = new Web3();
-const ContractAddr = '0xb375bafbda9c787b49d3ff56df19173f335a24e8';
+const ContractAddr = '0x4d675977069272e630c765b3a1f8fdb39abf2cab';
 // const MasterNodoContractAddr = '0x8e43127314a852e357bb50b58b7fad7a457a5e9f';
 const DeployBlock = 19912145;
 const RoundEndHash = web3.eth.abi.encodeEventSignature({
