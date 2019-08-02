@@ -26,22 +26,23 @@ exports.index =async function (req, res) {
 
 exports.add_startNewPhenix = async function(req , res){
     let startGoal = req.body.startGoal;
-    let startNewPhenix_data = startNewPhenix(startGoal);
-    let tx_id = await saveTransaction(req , startNewPhenix_data);
-    let phenix = await config.Phenix({
-        phenixId: "",
-        roundNumber: "",
-        startGoal: startGoal,
-        refundRate: "",
-        isCreated: false,
-        state:""
-    }).save()
-    await config.Task({
-        refId : phenix._id,
-        txId : tx_id,
-        type : "startNewPhenix"
-    }).save()
-    
+    if(startGoal && startGoal>0){
+        let startNewPhenix_data = startNewPhenix(startGoal);
+        let tx_id = await saveTransaction(req , startNewPhenix_data);
+        let phenix = await config.Phenix({
+            phenixId: "",
+            roundNumber: "",
+            startGoal: startGoal,
+            refundRate: "",
+            isCreated: false,
+            state:""
+        }).save()
+        await config.Task({
+            refId : phenix._id,
+            txId : tx_id,
+            type : "startNewPhenix"
+        }).save()
+    }
     res.redirect('/phenix');
 }
 
