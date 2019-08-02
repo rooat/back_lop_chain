@@ -38,7 +38,7 @@ exports.add_anounceNextRound = async function(req , res){
     let reInvestRate = req.body.reInvestRate;
     let count = await config.Round.countDocuments({phenix:phenixId});
     
-    if(phenixId && phenixId>0&& maxInvest && maxInvest>0 && minInvest &&maxInvest>0&& endBlock &&endBlock>0&& reInvestRate  && reInvestRate>0){
+    if(phenixId && phenixId>0&& maxInvest && maxInvest>0 && minInvest &&maxInvest>0&& endBlock &&endBlock>0&& reInvestRate ){
         if(reInvestRate>10000){
             return res.send({"resp":"reInvestRate 在0-10000之间"})
         }
