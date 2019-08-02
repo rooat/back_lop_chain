@@ -42,6 +42,19 @@ function invalidAddress(address){
 	return ethereum.isValidAddress(address);
 }
 
+function sub_zero(valuex){
+	valuex = valuex*10**6;
+	console.log("valuex =",valuex)
+	let indexx = String(valuex).indexOf(".");
+	console.log("indexx =",indexx)
+    if(indexx!=-1){
+		valuex = String(valuex).substring(0,indexx);
+		console.log("valuex =",valuex);
+	}
+	valuex += "000000000000";
+	return valuex;
+}
+
 
 module.exports={
 	invalidHash,
@@ -49,5 +62,6 @@ module.exports={
 	invalidAddress,
 	md5,
 	getObjParams,
-	result_req
+	result_req,
+	sub_zero
 }

@@ -39,6 +39,9 @@ exports.add_anounceNextRound = async function(req , res){
     let count = await config.Round.countDocuments({phenix:phenixId});
     
     if(phenixId && maxInvest && minInvest && endBlock && reInvestRate ){
+        if(reInvestRate<0 || reInvestRate>10000){
+            return res.send({"resp":"reInvestRate 在0-10000之间"})
+        }
         if(Number(reInvestRate)>0 && count<2){
             return res.send({"resp":"前两轮，reInvestRate 该值需为0"})
         }
@@ -58,8 +61,8 @@ exports.add_anounceNextRound = async function(req , res){
                 let round = await config.Round({
                     phenix: phenixId,
                     level: level,
-                    maxInvest: maxInvest,
-                    minInvest: minInvest,
+                    maxInvest: Number(maxInvest).toFixed(4),
+                    minInvest: Number(minInvest).toFixed(4),
                     endBlock: endBlock,
                     reInvestRate: reInvestRate,
                     deployState: 0,
@@ -230,6 +233,6 @@ function anounceNextRound(maxInvest,minInvest,endBlock,reInvestRate,phenixId){
                     "name": "phenixIndex",
                     "type": "uint256"
                 }]
-            }, [maxInvest,minInvest,endBlock,reInvestRate,phenixId]);
+            }, [config.utils.sub_zero(maxInvest),config.utils.sub_zero(minInvest),endBlock,reInvestRate,phenixId]);
     return data
 }

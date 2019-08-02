@@ -111,6 +111,6 @@ function startNewPhenix(startGoal){
                         "name": "startGoal",
                         "type": "uint256"
                     }]
-                }, [startGoal]);
+                }, [config.utils.sub_zero(startGoal)]);
     return data;
 } 
