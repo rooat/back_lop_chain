@@ -32,7 +32,7 @@ exports.add_startNewPhenix = async function(req , res){
         let phenix = await config.Phenix({
             phenixId: "",
             roundNumber: "",
-            startGoal: startGoal,
+            startGoal: config.utils.sub_zero(startGoal),
             refundRate: "",
             isCreated: false,
             state:""
