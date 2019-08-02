@@ -36,11 +36,11 @@
                 <tr>
                     <td><%= value['phenix'] %></td>
                     <td><%= value['level'] %></td>
-                    <td><%= value['totalInvest'] %></td>
-                    <td><%= value['goal'] %></td>
-                    <td><%= value['maxInvest'] %></td>
-                    <td><%= value['minInvest'] %></td>
-                    <td><%= value['reInvest'] %></td>
+                    <td><%= Number(value['totalInvest']/10**18).toFixed(4)%> </td>
+                    <td><%= Number(value['goal']/10**18).toFixed(4)%> </td>
+                    <td><%= Number(value['maxInvest']/10**18).toFixed(4)%> </td>
+                    <td><%= Number(value['minInvest']/10**18).toFixed(4)%> </td>
+                    <td><%= Number(value['reInvest']/10**18).toFixed(4)%> </td> 
                     <td><%= value['endBlock'] %></td>
                     <td>
                         <% if(value['deployState']==0){ %>
