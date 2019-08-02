@@ -61,8 +61,8 @@ exports.add_anounceNextRound = async function(req , res){
                 let round = await config.Round({
                     phenix: phenixId,
                     level: level,
-                    maxInvest: Number(maxInvest).toFixed(4),
-                    minInvest: Number(minInvest).toFixed(4),
+                    maxInvest: config.utils.sub_zero(maxInvest),
+                    minInvest: config.utils.sub_zero(minInvest),
                     endBlock: endBlock,
                     reInvestRate: reInvestRate,
                     deployState: 0,
