@@ -36,7 +36,7 @@
                     
                     <td>
                         <%  let goal = value['startGoal']; goal = Number(goal)%>
-                        <%= goal.toFixed(4)%> 
+                        <%= Number(goal/10**18).toFixed(4)%> 
                     </td>
                     <td>
                         <% if(value['refundRate']==null){ %>
