@@ -7,9 +7,11 @@ var User = new Schema({
 })
 var Notice = new Schema({
   id : Number,
+  title : String,
   content : String,
   state : Number,
-  updateAt : { type: Date, default: Date.now },
+  updateAt : { type: Date,},
+  createAt : { type : Date ,  default: Date.now }
 })
 
 var Phenix = new Schema({

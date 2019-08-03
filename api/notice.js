@@ -39,9 +39,9 @@ exports.add = async function(req , res){
     }
     await config.Notice({
         id : id,
+        title : title,
         content : content,
         state : 0,
-        updateAt : new Date().getTime(),
     }).save()
     
     res.redirect('/notice');
@@ -50,10 +50,11 @@ exports.add = async function(req , res){
 exports.edit =async function (req, res) {
     let id = req.body.id; 
     let content = req.body.noticecontent;
+    let title = req.body.title;
 
     let notice = await config.Notice.findOne({"_id":id});
     if(notice){
-        await config.Notice.update({"_id":id},{$set:{"content":content,"updateAt":new Date().getTime()}});
+        await config.Notice.update({"_id":id},{$set:{"content":content,"title":title,"updateAt":new Date().getTime()}});
     }
 
     res.redirect('/notice');

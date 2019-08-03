@@ -16,6 +16,7 @@
                 <thead>
                     <tr>
                         <th>编号</th>
+                        <th>标题</th>
                         <th>公告内容</th>
                         <th>更新时间</th>
                         <th>创建时间</th>
@@ -27,6 +28,7 @@
                 <% noticelist.forEach(function(value){ %>
                 <tr>
                     <td><%= value['id'] %></td>
+                    <th><%= value['title'] %></th>
                     <td><p  style="width:140px ; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"><%= value['content'] %></p></td>
                     <td><% if(value['updateAt']){ %>
                         <%= new Date(value['updateAt']).getFullYear()+'-'+new Date(value['updateAt']).getMonth()+'-'+new Date(value['updateAt']).getDate()+' '+new Date(value['updateAt']).getHours()+':'+new Date(value['updateAt']).getMinutes()+':'+new Date(value['updateAt']).getSeconds() %>
@@ -41,7 +43,7 @@
                         <% } %>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateNotice" onclick="update_notice('<%=value['_id']%>','<%=value['content']%>')">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateNotice" onclick="update_notice('<%=value['_id']%>','<%=value['title']%>','<%=value['content']%>')">
                             编辑
                         </button>
                         <button type="button" class="btn btn-warning"  onclick="window.location.href='/del_notice?id=<%=value['_id']%>';return false;">
@@ -75,7 +77,12 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" action="/add_notice" method="post">
-                   
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-4 control-label">标题 : </label>
+                        <div class="col-sm-8">
+                        	<textarea cols="40" rows="20" name="title" class="form-contol" placeholder="输入标题"></textarea>
+                        </div>
+                    </div> 
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-4 control-label">内容 : </label>
                         <div class="col-sm-8">
@@ -106,8 +113,14 @@
             <div class="modal-body">
                 <form class="form-horizontal" role="form" action="/update_notice" method="post">
                    <input type="hidden" class="form-contol" id="edit_id" name="id"/>
+                   <div class="form-group">
+                        <label for="title" class="col-sm-4 control-label">标题 : </label>
+                        <div class="col-sm-8">
+                            <textarea cols="40" id="edit_title" rows="20" name="title" class="form-contol" placeholder="输入新标题"></textarea>
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <label for="inputPassword" class="col-sm-4 control-label">内容 : </label>
+                        <label for="noticecontent" class="col-sm-4 control-label">内容 : </label>
                         <div class="col-sm-8">
                             <textarea cols="40" id="editcontent" rows="20" name="noticecontent" class="form-contol" placeholder="输入公告内容"></textarea>
                         </div>
@@ -134,8 +147,9 @@
 </div>
 <%- include footer %>
 <script type="text/javascript">
-    function update_notice(id,data){
+    function update_notice(id,title,data){
         $("#edit_id").val(id);
+        $("#edit_title").val(id)
         $("#editcontent").val(data);
     }
 </script>
