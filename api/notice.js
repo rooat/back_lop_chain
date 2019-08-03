@@ -33,13 +33,8 @@ exports.add = async function(req , res){
     let content = req.body.noticecontent;
     let title = req.body.title;
     let maxId = await config.Notice.find().sort({"createAt":-1}).limit(1);
-    let id =0;
-    if(maxId && maxId.length>0){
-        id = maxId[0].id;
-        id = Number(id)+1;
-    }
+   
     await config.Notice({
-        id : id,
         title : title,
         content : content,
         state : 0,

@@ -6,7 +6,6 @@ var User = new Schema({
   password:String,
 })
 var Notice = new Schema({
-  id : Number,
   title : String,
   content : String,
   state : Number,
