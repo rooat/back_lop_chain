@@ -25,9 +25,9 @@
                 </thead>
                 <tbody>
                 
-                <% noticelist.forEach(function(value){ %>
+                <% noticelist.forEach(function(value,index){ %>
                 <tr>
-                    <td><%= value['id'] %></td>
+                    <td><%= index %></td>
                     <th><%= value['title'] %></th>
                     <td><p  style="width:140px ; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"><%= value['content'] %></p></td>
                     <td><% if(value['updateAt']){ %>
