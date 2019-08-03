@@ -22,7 +22,6 @@ app.use(session({
     cookie: {maxAge: 10 * 60 * 60 * 1000}
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-
 /* 中间件,判断用户是否登录 */
 //app.use('/', routes_public);
 app.use(function (req, res, next) {
@@ -36,6 +35,7 @@ app.use(function (req, res, next) {
     next();
 });
 app.use('/', routes);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
