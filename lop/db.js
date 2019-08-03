@@ -13,12 +13,12 @@ var Notice = new Schema({
 })
 
 var Phenix = new Schema({
-  phenixId: {type: Number},
-  roundNumber: {type: Number},
+  phenixId: {type: Number, index: {unique: true}},
   startGoal: {type: Number},
   refundRate: {type: Number},
   state: {type: Number, default: 0},
   isCreated: {type: Boolean},
+  endAt: { type: Date},
   createAt: { type: Date, default: Date.now },
 })
 
@@ -36,7 +36,9 @@ var Round = new Schema(
   reInvestRate: {type: Number},
   deployTime: { type: Date },
   deployState: {type: Number},
-});
+}
+, { autoIndex: false }
+);
 
 Round.index({ phenix: 1, level: 1 }, { unique: true });
 
@@ -49,17 +51,26 @@ var Task = new Schema(
 
 var Account = new Schema(
 {
-    address: {type: String, unique: true, lowercase: true}, // todo vaildation
-    invideCode: {type: Number, index: {unique: true}},
+    address: {type: String, lowercase: true}, // todo vaildation
+    index: Number,
+    inviteCode: {type: Number, index: {unique: true}},
     inviterCode: {type: Number},
     investAmount: {type: Number, default: 0},
-});
+    leaderRewardLevel: {type: Number, default: 0},
+    managerRewardRate: {type: Number, default: 0},
+    historyDeposit: {type: Number, default: 0},
+}
+, { autoIndex: false }
+);
+
+Account.index({address: 1, index: 1}, {unique: true});
 
 var Deposit = new Schema(
 {
-    sender: {type: String, lowercase: true},
+    address: {type: String, lowercase: true},
     index: {type: Number},
     amount: {type: String},
+    createAt: { type: Date, default: Date.now },
 });
 
 var Withdraw = new Schema({
@@ -67,15 +78,26 @@ var Withdraw = new Schema({
   index: {type: Number},
   amount: {type: Number},
   createAt: { type: Date, default: Date.now },
-})
+});
+
+var Feed = new Schema({
+  address: {type: String, lowercase: true},
+  index: {type: Number},
+  phenix: {type: Number},
+  joinRound: {type: Number},
+  stopRound: Number,
+  amount: {type: String},
+  createAt: { type: Date, default: Date.now },
+});
 
 var Reward = new Schema({
   address: {type: String, lowercase: true},
   index: {type: Number},
   phenix: {type: Number},
   amount: {type: Number},
-  round: {type: Number},
-  isReInvested: Boolean,
+  roundIndex: Number,
+  fromIndex: Number,
+  isTaken: {type: Boolean, default: false},
   createAt: { type: Date, default: Date.now },
 })
 
@@ -122,6 +144,7 @@ module.exports.Account = mongoose.model('account', Account);
 module.exports.Phenix = mongoose.model('phenix', Phenix);
 module.exports.Reward = mongoose.model('reward', Reward);
 module.exports.Deposit = mongoose.model('deposit', Deposit);
+module.exports.Feed = mongoose.model('feed', Feed);
 module.exports.Task = mongoose.model('task', Task);
 module.exports.Log = mongoose.model('log', Log);
 module.exports.Transaction = mongoose.model('transaction', Transaction);
@@ -131,17 +154,4 @@ module.exports.Notice = mongoose.model('notice',Notice);
 //etzlop:etz123456@
 mongoose.connect('mongodb://etzlop:etz123456@localhost:27017/lop', { useNewUrlParser: true, useFindAndModify:false });
 mongoose.set('debug', false);
-// mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open',function() {
-//   var Account = mongoose.model('account', account);
-//   var Masternode = mongoose.model('masternode', masternode);
-//   var a = new Account({inviterCode: 100003, masternodes: [{createdBlocks:1}, {createdBlocks: 2}, {createdBlocks:3}]})
-//   a.save(async function() {
-//     let result = await Masternode.find({}).exec()
-//     console.log(result);
-//   })
-//
-// });
