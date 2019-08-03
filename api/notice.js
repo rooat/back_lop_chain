@@ -31,6 +31,7 @@ exports.latest = async function(req , res){
 
 exports.add = async function(req , res){
     let content = req.body.noticecontent;
+    let title = req.body.title;
     let maxId = await config.Notice.find().sort({"createAt":-1}).limit(1);
     let id =0;
     if(maxId && maxId.length>0){
