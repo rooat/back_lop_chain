@@ -21,11 +21,14 @@ exports.index =async function (req, res) {
     let list = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(pagesize).skip(ps);
     if(list && list.length>0){
         for(var i=0;i<list.length;i++){
-            let award_obj = config.Reward.aggregate([ 
-                { $match : { "phenix":phenixId,"roundIndex":list[i].level}}, 
-                { $group : { _id : "", total : {$sum : "$amount"} }} ]);
-            let award =award_obj .total;
-            list[i].award = award;
+            let award_obj = await config.Award.aggregate([ 
+                { $match : { "phenix":2,"roundIndex":0}}, 
+                { $group : { _id : "$roundIndex", total : {$sum : "$amount"} }} ]);
+                let award = 0;
+                if(award_obj && award_obj.length>0){
+                    award = award_obj[0].total;
+                }
+                list[i].award = award;
         }
     }
     let count = await config.Round.countDocuments({phenix:phenixId});
