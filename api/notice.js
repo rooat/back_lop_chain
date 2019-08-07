@@ -32,14 +32,16 @@ exports.latest = async function(req , res){
 exports.add = async function(req , res){
     let content = req.body.noticecontent;
     let title = req.body.title;
-    let maxId = await config.Notice.find().sort({"createAt":-1}).limit(1);
-   
-    await config.Notice({
-        title : title,
-        content : content,
-        state : 0,
-    }).save()
-    
+    if(content && title){
+        content = content.replace(/\ +/g,"").replace(/[\r\n]/g,"");
+        title = title.replace(/\ +/g,"").replace(/[\r\n]/g,"");
+        await config.Notice({
+            title : title,
+            content : content,
+            state : 0,
+            updateAt:new Date().getTime()
+        }).save()
+    }
     res.redirect('/notice');
 }
 

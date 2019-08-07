@@ -16,8 +16,8 @@ var tokenAddress= "0xbc923f769f56493230fdc45db5ca43742862fb20";//合约地址
 const token = require('./contract/tokenABI.json');
 
 
-var sender = "0xdCb25d3710645C2fe3Fd7e04601De50bD54ed124";
-//var sender = "0xDfaB41faf59A7235cB9c4574D5aE4ca0FD5227D3"
+// var sender = "0xdCb25d3710645C2fe3Fd7e04601De50bD54ed124";
+var sender = "0xDfaB41faf59A7235cB9c4574D5aE4ca0FD5227D3"
 
 var Web3 = require('web3');
 var net = require('net');
