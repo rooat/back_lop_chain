@@ -18,7 +18,7 @@
                     <tr>
                         <th>phenixId</th>
                         <th>level</th>
-                        <th>award</th>
+                        <!-- <th>award</th> -->
                         <th>totalInvest</th>
                         <th>goal</th>
                         <th>maxInvest</th>
@@ -37,7 +37,7 @@
                 <tr>
                     <td><%= value['phenix'] %></td>
                     <td><%= value['level'] %></td>
-                    <td><%= value['award'] %></td>
+                    <!-- <td><%= value['award'] %></td> -->
                     <td><% if(value['totalInvest']){%>
                         <%= Number(value['totalInvest']/10**18).toFixed(4)%>
                         <% }else{ %>
