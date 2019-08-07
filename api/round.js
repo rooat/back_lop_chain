@@ -19,6 +19,15 @@ exports.index =async function (req, res) {
     }
     let ps = (page-1)*pagesize;
     let list = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(pagesize).skip(ps);
+    if(list && list.length>0){
+        for(var i=0;i<list.length;i++){
+            let award_obj = config.Reward.aggregate([ 
+                { $match : { "phenix":phenixId,"roundIndex":list[i].level}}, 
+                { $group : { _id : "", total : {$sum : "$amount"} }} ]);
+            let award =award_obj .total;
+            list[i].award = award;
+        }
+    }
     let count = await config.Round.countDocuments({phenix:phenixId});
     let blockNumber = await config.web3.eth.getBlockNumber();
     res.render('round', {

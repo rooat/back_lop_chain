@@ -5,11 +5,12 @@ var User = new Schema({
   username:String,
   password:String,
 })
+
 var Notice = new Schema({
   title : String,
   content : String,
   state : Number,
-  updateAt : { type: Date,},
+  updateAt : { type: Date},
   createAt : { type : Date ,  default: Date.now }
 })
 
@@ -57,9 +58,13 @@ var Account = new Schema(
     inviteCode: {type: Number, index: {unique: true}},
     inviterCode: {type: Number},
     investAmount: {type: Number, default: 0},
-    leaderRewardLevel: {type: Number, default: 0},
-    managerRewardRate: {type: Number, default: 0},
+    // leaderRewardLevel: {type: Number, default: 0},
+    // managerRewardRate: {type: Number, default: 0},
     historyDeposit: {type: Number, default: 0},
+    historyWithdraw: {type: Number, default: 0},
+    // isVIP: {type: Boolean, default: false},
+    levelParam: {type: Number, default: 0},
+    achievement: {type: Number, default: 0},
 }
 , { autoIndex: false }
 );
@@ -71,6 +76,7 @@ var Deposit = new Schema(
     address: {type: String, lowercase: true},
     index: {type: Number},
     amount: {type: String},
+    txHash: String,
     createAt: { type: Date, default: Date.now },
 });
 
@@ -78,6 +84,7 @@ var Withdraw = new Schema({
   address: {type: String, lowercase: true},
   index: {type: Number},
   amount: {type: Number},
+  txHash: String,
   createAt: { type: Date, default: Date.now },
 });
 
@@ -141,18 +148,33 @@ var Log = new Schema({
   data: {type: String},
 })
 
-module.exports.Account = mongoose.model('account', Account);
-module.exports.Phenix = mongoose.model('phenix', Phenix);
-module.exports.Reward = mongoose.model('reward', Reward);
-module.exports.Deposit = mongoose.model('deposit', Deposit);
-module.exports.Feed = mongoose.model('feed', Feed);
-module.exports.Task = mongoose.model('task', Task);
-module.exports.Log = mongoose.model('log', Log);
-module.exports.Transaction = mongoose.model('transaction', Transaction);
-module.exports.User = mongoose.model('user',User);
-module.exports.Round = mongoose.model('round',Round);
-module.exports.Notice = mongoose.model('notice',Notice);
+var Award = new Schema({ //动态奖励
+  address: {type: String, lowercase: true},
+  index: {type: Number},
+  phenix: {type: Number},
+  roundIndex: Number,
+  type: String,
+  state: {type: Number, default: 0},
+  amount: {type: Number, default: 0},
+}, { autoIndex: false })
+Award.index({account: 1, index: 1, phenix: 1, roundIndex: 1}, {unique: true});
+
+var gameConn = mongoose.createConnection('mongodb://etzlop:etz123456@localhost:27017/lop', { useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true });
+gameConn.set('debug', false);
+module.exports.Account = gameConn.model('account', Account);
+module.exports.Phenix = gameConn.model('phenix', Phenix);
+module.exports.Reward = gameConn.model('reward', Reward);
+module.exports.Deposit = gameConn.model('deposit', Deposit);
+module.exports.Withdraw = gameConn.model('withdraw', Withdraw);
+module.exports.Feed = gameConn.model('feed', Feed);
+module.exports.Task = gameConn.model('task', Task);
+module.exports.Log = gameConn.model('log', Log);
+module.exports.Transaction = gameConn.model('transaction', Transaction);
+module.exports.User = gameConn.model('user',User);
+module.exports.Round = gameConn.model('round',Round);
+module.exports.Notice = gameConn.model('notice',Notice);
+module.exports.Award = gameConn.model('award',Award);
 //etzlop:etz123456@
-mongoose.connect('mongodb://etzlop:etz123456@localhost:27017/lop', { useNewUrlParser: true, useFindAndModify:false });
-mongoose.set('debug', false);
-mongoose.set('useCreateIndex', true);
+// mongoose.connect();
+// gameConn.set('debug', false);
+// mongoose.set('useCreateIndex', true);

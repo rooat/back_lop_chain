@@ -1,5 +1,5 @@
 // var Web3 = require('web3')
-var {User,Phenix,Round,Task,Account,Deposit,Withdraw,Reward,Transaction,Log,Notice} = require('./lop/db');
+var {User,Phenix,Round,Task,Account,Deposit,Withdraw,Reward,Transaction,Log,Notice,Award} = require('./lop/db');
 
 const logger = require('./logs/logger.js')
 const utils = require('./utils/utils')
@@ -43,6 +43,7 @@ module.exports = {
     Transaction,
     Log,
     Notice,
+    Award,
 
     controllerAdd,
     
