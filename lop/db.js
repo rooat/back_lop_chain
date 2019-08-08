@@ -149,15 +149,15 @@ var Log = new Schema({
 })
 
 var Award = new Schema({ //动态奖励
-  address: {type: String, lowercase: true},
-  index: {type: Number},
+  inviteCode: {type: Number},
   phenix: {type: Number},
   roundIndex: Number,
   type: String,
   state: {type: Number, default: 0},
   amount: {type: Number, default: 0},
+  createAt: { type: Date, default: Date.now },
 }, { autoIndex: false })
-Award.index({account: 1, index: 1, phenix: 1, roundIndex: 1}, {unique: true});
+Award.index({inviteCode: 1, phenix: 1, roundIndex: 1, type:1}, {unique: true});
 
 var gameConn = mongoose.createConnection('mongodb://etzlop:etz123456@localhost:27017/lop', { useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true });
 gameConn.set('debug', false);

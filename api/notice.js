@@ -4,7 +4,7 @@ let async = require('async');
 let moment = require('moment');
 const {ABI} = require('../lop/config/abi');
 const {ContractAddr} = require('../lop/config/contract');
-let pagesize = 5;
+let pagesize = 30;
 
 exports.index =async function (req, res) {
     let page = req.query.page ? req.query.page : 1; //获取当前页数，如果没有则为1

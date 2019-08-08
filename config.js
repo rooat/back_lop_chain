@@ -18,12 +18,13 @@ const token = require('./contract/tokenABI.json');
 
 // var sender = "0xdCb25d3710645C2fe3Fd7e04601De50bD54ed124";
 var sender = "0xDfaB41faf59A7235cB9c4574D5aE4ca0FD5227D3"
+var awardSender = "0x00a5C755C8a359c3113B842486Ffd197AF0B92fB"
 
 var Web3 = require('web3');
 var net = require('net');
  var web3 = new Web3('/home/ubuntu/.etherzero/geth.ipc', net);
 
- //  var  web3 = new Web3('http://etzrpc.org');
+  // var  web3 = new Web3('http://etzrpc.org');
 //contract test = "0x14b0469cc515096164ac499d08fee263105129ce"
 //sender test = "0xDfaB41faf59A7235cB9c4574D5aE4ca0FD5227D3"
 module.exports = {
@@ -51,6 +52,7 @@ module.exports = {
     
     controllerPrivate,
     logger,
+    awardSender,
     sender
 }
   

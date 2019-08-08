@@ -1,0 +1,92 @@
+<%- include header %>
+<div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+<%- include left %>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+            <ol class="breadcrumb">
+                <li><a href="#">首页</a></li>
+                <li><a href="/phenix">仓位管理</a></li>
+                <li><a href="#" onclick="roundbtn()">轮次管理</a></li>
+            </ol>
+            <div class="row" style="margin-left:10px">
+                <% if(btnstate==0){%>
+                    <button type="button" class="btn btn-default"  disabled="disabled" >
+                            发放奖励
+                    </button>
+                <% }else{ %>
+                    <button type="button" class="btn btn-success"  onclick="sendawardbtn('<%= phenixId %>','<%= level %>')">
+                            发放奖励
+                    </button> 
+                <% } %>
+                
+                <span>Sender Balance : </span><span><%= balance %></span>
+            </div>
+            <input name="phenixId" id="phenixId" class="form-contol" type="hidden" value="<%= phenixId %>"/>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>inviteCode</th>
+                        <th>phenix</th>
+                        <th>roundIndex</th>
+                        <th>type</th>
+                        <th>amount</th>
+                        <th>state</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <% awardlist.forEach(function(value){ %>
+                <tr>
+                    <td><%= value['inviteCode'] %></td>
+                    <td><%= value['phenix'] %></td>
+                    <td><%= value['roundIndex'] %></td>
+                    <td><%= value['type'] %></td>
+                    <td><%= Number(value['amount']).toFixed(4) %></td>
+                    <td>
+                        <% if(value['state']==0){ %>
+                            待发放
+                        <% }else{ %>
+                            已发放
+                        <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="col-lg-12 text-center">
+                <ul class="pagination">
+                    <%- include page %>
+                </ul>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="testmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <p style="font-size: 20px" id="modaltext">
+                        发送成功
+                    </p>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include footer %>
+<script type="text/javascript">
+    function sendawardbtn(phenixId,level){
+        axios.post('/sendAward',{
+            "phenixId":phenixId,
+            "level":level
+        }).then(function(response){
+            $("#testmodal").modal("toggle")
+        })
+    }
+
+    function roundbtn(){
+        let phenixId = $("#phenixId").val()
+        window.location.href="/round?phenixId="+phenixId
+    }
+</script>

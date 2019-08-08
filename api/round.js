@@ -4,7 +4,7 @@ let async = require('async');
 let moment = require('moment');
 const {ABI} = require('../lop/config/abi');
 const {ContractAddr} = require('../lop/config/contract');
-let pagesize = 5;
+let pagesize = 30
 
 exports.index =async function (req, res) {
     let phenixId = req.query.phenixId;
@@ -22,13 +22,13 @@ exports.index =async function (req, res) {
     if(list && list.length>0){
         for(var i=0;i<list.length;i++){
             let award_obj = await config.Award.aggregate([ 
-                { $match : { "phenix":2,"roundIndex":0}}, 
+                { $match : { "phenix":list[i].phenix,"roundIndex":list[i].level}}, 
                 { $group : { _id : "$roundIndex", total : {$sum : "$amount"} }} ]);
                 let award = 0;
                 if(award_obj && award_obj.length>0){
                     award = award_obj[0].total;
                 }
-                list[i].award = award;
+            list[i].award = Number(award).toFixed(4);
         }
     }
     let count = await config.Round.countDocuments({phenix:phenixId});
@@ -172,6 +172,7 @@ exports.edit_block = async function(req, res){
     }
     return res.send({"resp":"failure"})
 }
+
 
 
 async function saveTransaction(req,data){

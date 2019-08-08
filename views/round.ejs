@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                
+
                 <% roundlist.forEach(function(value){ %>
                 <tr>
                     <td><%= value['phenix'] %></td>
@@ -88,22 +88,25 @@
                         <% } %>
                     </td>
                     <td>
-                                <% if(value['deployState']==0){ %>
-                                    <button type="button" class="btn btn-warning" onclick="add_startNextRound('<%= value['_id']%>')">
-                                        开启
-                                    </button>
-                                <% }else if(value['state']==1 ||value['state']==3 || value['deployState']==1 ||value['deployState']==3){ %>
-                                        <button type="button" class="btn btn-warning" disabled="disabled">
-                                        已结束
-                                    </button>
-                                <% }else { %>
-                                    <button type="button" class="btn btn-warning" disabled="disabled">
-                                        已开启
-                                        </button>
-                                            <button type="button" class="btn btn-warning" onclick="add_currentRoundSucceed('<%= value['_id']%>')">
-                                                结束
-                                        </button> 
-                                <% } %>
+                        <button type="button" class="btn btn-default" onclick="checkbtn('<%= value['phenix']%>','<%= value['level']%>')">
+                            查看
+                        </button>
+                        <% if(value['deployState']==0 || !value['state']){ %>
+                            <button type="button" class="btn btn-primary" onclick="add_startNextRound('<%= value['_id']%>')">
+                                开启
+                            </button>
+                        <% }else if(value['state']==1 ||value['state']==3 || value['deployState']==1 ||value['deployState']==3){ %>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
+                                已结束
+                            </button>
+                        <% }else { %>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
+                                已开启
+                                </button>
+                                <button type="button" class="btn btn-warning" onclick="add_currentRoundSucceed('<%= value['_id']%>')">
+                                        结束
+                                </button> 
+                        <% } %>
 
                        </td>
                 </tr>
@@ -299,5 +302,9 @@ function setNewBlock(){
             window.location.href="/round?phenixId="+phenixId
         }
     })
+}
+function checkbtn(phenixId,level){
+  
+    window.location.href="/award?phenixId="+phenixId+"&level="+level;
 }
 </script>

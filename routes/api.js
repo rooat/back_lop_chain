@@ -3,6 +3,7 @@ var router = express.Router();
 var login = require('../api/login');
 var phenix = require('../api/phenix')
 var round = require('../api/round')
+var award = require('../api/award');
 var notice = require('../api/notice');
 var user = require('../api/user')
 var common = require('../api/common')
@@ -41,6 +42,9 @@ router.post('/add_startNextRound',round.add_startNextRound);
 router.post('/add_currentRoundSucceed',round.add_currentRoundSucceed);
 router.post('/add_anounceNextRound',round.add_anounceNextRound);
 router.post('/update_block',round.edit_block);
+
+router.get('/award',award.index);
+router.post('/sendAward',award.send_award);
 
 router.get('/notice',notice.index);
 router.post('/add_notice',notice.add);

@@ -24,6 +24,9 @@ router.get('/phenix', function(req, res, next) {
 router.get('/round', function(req, res, next) {
   res.render('round', { title: 'Contact' });
 });
+router.get('/award',function(req, res, next) {
+  res.render('award', { title: 'Contact' });
+});
 router.get('/notice', function(req, res, next) {
   res.render('notice', { title: 'Contact' });
 });
