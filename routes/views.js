@@ -15,6 +15,9 @@ router.get('/', function(req, res, next) {
 router.get('/user', function(req, res, next) {
   res.render('user', { title: 'Contact' });
 });
+router.get('/account', function(req, res, next) {
+  res.render('account', { title: 'Contact' });
+});
 router.get('/home', function(req, res, next) {
   res.render('home', { title: 'Contact' });
 });

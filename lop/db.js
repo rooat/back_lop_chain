@@ -65,6 +65,7 @@ var Account = new Schema(
     // isVIP: {type: Boolean, default: false},
     levelParam: {type: Number, default: 0},
     achievement: {type: Number, default: 0},
+    offerAchievement: {type: Number, default: 0},
 }
 , { autoIndex: false }
 );
@@ -158,7 +159,7 @@ var Award = new Schema({ //动态奖励
   createAt: { type: Date, default: Date.now },
 }, { autoIndex: false })
 Award.index({inviteCode: 1, phenix: 1, roundIndex: 1, type:1}, {unique: true});
-
+//etzlop:etz123456@
 var gameConn = mongoose.createConnection('mongodb://etzlop:etz123456@localhost:27017/lop', { useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true });
 gameConn.set('debug', false);
 module.exports.Account = gameConn.model('account', Account);

@@ -6,6 +6,7 @@ var round = require('../api/round')
 var award = require('../api/award');
 var notice = require('../api/notice');
 var user = require('../api/user')
+var account = require('../api/account')
 var common = require('../api/common')
 
 var auth = function (req, res, next) {
@@ -57,6 +58,9 @@ router.post('/addUser', user.add);
 router.get('/editUser', user.edit);
 router.post('/updateUser', user.update);
 router.get('/delUser', user.delete);
+
+router.get('/account',account.index);
+router.post('/updateAmount',account.add_amount);
 
 router.get('/latest_blocknumber',common.getBlockNumber);
 

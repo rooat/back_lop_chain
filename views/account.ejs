@@ -1,0 +1,106 @@
+<%- include header %>
+<div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+<%- include left %>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="/account">用户管理</a></li>
+            </ol>
+            <div class="row" style="margin-left:10px">
+                
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>InvestAmount</th>
+                        <th>HistoryDeposit</th>
+                        <th>HistoryDeposit</th>
+                        <th>LevelParam</th>
+                        <th>Achievement</th>
+                        <th>InviteCode</th>
+                        <th>InviterCode</th>
+                        <th>Operate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                <% accountlist.forEach(function(value,index){ %>
+                <tr>
+                    <th><%= value['address'] %></th>
+                    <th><%= value['investAmount'] %></th> 
+                    <th><%= value['historyDeposit'] %></th>
+                    <th><%= value['historyWithdraw'] %></th>
+                    <th><%= value['levelParam'] %></th>
+                    <th><%= value['achievement"'] %></th>
+                    <th><%= value['inviteCode'] %></th>
+                    <th><%= value['inviterCode'] %></th>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateNotice" onclick="update_amountdiv('<%= value['_id']%>')">
+                            设置业绩
+                        </button>
+                    </td>
+                </tr>
+                <% }) %>
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="col-lg-12 text-center">
+                <ul class="pagination">
+                    <%- include page %>
+                </ul>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="amountid"/>
+<div class="modal fade" id="updateAmountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        设置业绩
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <label for="inputPassword" class="col-sm-4 control-label">offerAchievement : </label>
+                    <div class="col-sm-8">
+                        <input name="offerAchievement" style=" border-radius: 7px; height: 40px;font-size: 20px;" id="offerAchievement" type="number" placeholder="offerAchievement"/>
+                    </div>
+                    <div style="margin: 50px 0 30px 3%;">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="update_amount_btn()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="testmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <p style="font-size: 20px" id="modaltext">
+                            设置成功
+                        </p>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div
+<%- include footer %>
+<script type="text/javascript">
+    function update_amountdiv(id){
+        $("#amountid").val(id);
+       $("#updateAmountModal").modal("toggle");
+    }
+    function update_amount_btn(){
+        let id =$("#amountid").val();
+       let amount = $("#offerAchievement").val();
+       axios.post('/updateAmount',{"id":id,"amount":amount}).then(function(response){
+         $("#testmodal").modal("toggle")
+       }) 
+    }
+</script>
