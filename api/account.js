@@ -7,6 +7,11 @@ const {ContractAddr} = require('../lop/config/contract');
 let pagesize = 30;
 
 exports.index =async function (req, res) {
+    let inviteCode = req.query.inviteCode;
+    let option = {};
+    if(inviteCode){
+        option ={"inviteCode":inviteCode}
+    }
     let page = req.query.page ? req.query.page : 1; //获取当前页数，如果没有则为1
     let url = req.originalUrl; //获取当前url，并把url中page参数过滤掉
     url = url.replace(/([?&]*)page=([0-9]+)/g, '');
@@ -16,7 +21,7 @@ exports.index =async function (req, res) {
         url += '?';
     }
     let ps = (page-1)*pagesize;
-    let list = await config.Account.find().sort({"inviteCode":-1}).limit(pagesize).skip(ps);
+    let list = await config.Account.find(option).sort({"inviteCode":-1}).limit(pagesize).skip(ps);
     let count = await config.Account.countDocuments({"state":0});
     res.render('account', {
             accountlist: list,
