@@ -22,7 +22,7 @@ exports.index =async function (req, res) {
     }
     let ps = (page-1)*pagesize;
     let list = await config.Account.find(option).sort({"inviteCode":-1}).limit(pagesize).skip(ps);
-    let count = await config.Account.countDocuments({"state":0});
+    let count = await config.Account.countDocuments();
     res.render('account', {
             accountlist: list,
             page: showPage.show(url, count, pagesize, page),
