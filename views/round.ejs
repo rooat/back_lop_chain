@@ -82,7 +82,7 @@
                     </td>
                     <td><%= value['reInvestRate'] %></td>
                     <td><% if(value['deployTime']){ %>
-                        <%= new Date(value['deployTime']).getFullYear()+'-'+new Date(value['deployTime']).getMonth()+'-'+new Date(value['deployTime']).getDate() %>
+                        <%= new Date(value['deployTime']).getFullYear()+'-'+(new Date(value['deployTime']).getMonth()+1)+'-'+new Date(value['deployTime']).getDate() %>
                         <% }else{%>
                             0000-00-00
                         <% } %>
@@ -91,7 +91,7 @@
                         <button type="button" class="btn btn-default" onclick="checkbtn('<%= value['phenix']%>','<%= value['level']%>')">
                             查看
                         </button>
-                        <% if(value['deployState']==0 || !value['state']){ %>
+                        <% if(value['deployState']!=2 && (value['deployState']==0 || !value['state'])){ %>
                             <button type="button" class="btn btn-primary" onclick="add_startNextRound('<%= value['_id']%>')">
                                 开启
                             </button>
