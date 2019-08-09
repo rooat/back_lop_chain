@@ -31,7 +31,7 @@
                     <th><%= value['title'] %></th>
                     <td><p  style="width:140px ; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"><%= value['content'] %></p></td>
                     <td><% if(value['updateAt']){ %>
-                        <%= new Date(value['updateAt']).getFullYear()+'-'+new Date(value['updateAt']).getMonth()+'-'+new Date(value['updateAt']).getDate()+' '+new Date(value['updateAt']).getHours()+':'+new Date(value['updateAt']).getMinutes()+':'+new Date(value['updateAt']).getSeconds() %>
+                        <%= new Date(value['updateAt']).getFullYear()+'-'+(new Date(value['updateAt']).getMonth()+1)+'-'+new Date(value['updateAt']).getDate()+' '+new Date(value['updateAt']).getHours()+':'+new Date(value['updateAt']).getMinutes()+':'+new Date(value['updateAt']).getSeconds() %>
                         <% }else{%>
                             0000-00-00
                         <% } %>
