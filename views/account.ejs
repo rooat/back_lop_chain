@@ -10,7 +10,7 @@
             <div class="row" style="margin-left:10px">
                <input type="text" style="border-radius: 7px;margin-right: 2%; height: 30px;font-size: 18px;" id="invitecodesearch" /><button onclick="searchaccount()" class="btn btn-primary" placeholder="输入值">搜索</button> 
             </div>
-            <table class="table">
+            <table class="table" style="table-layout:fixed;">
                 <thead>
                     <tr>
                         <th>Address</th>
@@ -29,7 +29,7 @@
                 
                 <% accountlist.forEach(function(value,index){ %>
                 <tr>
-                    <th><%= value['address'] %></th>
+                    <th><div style="width:50px;overflow:hidden;white-space:norwarp;text-overflow:ellipsis;"><%= value['address'] %></div></th>
                     <th><%= value['investAmount'] %></th> 
                     <th><%= value['historyDeposit'] %></th>
                     <th><%= value['historyWithdraw'] %></th>
