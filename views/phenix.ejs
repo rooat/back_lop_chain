@@ -35,7 +35,11 @@
                     </td>
                     
                     <td>
-                        <%= Number(value['startGoal']/10**18).toFixed(4)%> 
+                        <% if(value['startGoal']==null){ %>
+                            --
+                        <% }else{ %>
+                            <%= Number(value['startGoal']/10**18).toFixed(4)%> 
+                        <% } %>
                     </td>
                     <td>
                         <% if(value['refundRate']==null){ %>
