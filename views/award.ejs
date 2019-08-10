@@ -18,7 +18,7 @@
                             发放奖励
                     </button> 
                 <% } %>
-                <span>Sender Address : </span><span><%= address %></span> 
+                <span>Sender Address : </span><span><%= address %></span> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Sender Balance : </span><span><%= balance %></span>
             </div>
             <input name="phenixId" id="phenixId" class="form-contol" type="hidden" value="<%= phenixId %>"/>
@@ -81,6 +81,7 @@
             "phenixId":phenixId,
             "level":level
         }).then(function(response){
+            $("#modaltext").html(response.data.resp);
             $("#testmodal").modal("toggle")
         })
     }

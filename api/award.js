@@ -38,6 +38,16 @@ exports.send_award = async function(req, res){
     let phenixId = req.body.phenixId;
     let level  = req.body.level;
     if(phenixId && level){
+        let awardTask = await config.Task.find({$or:[{"type":"leaderaward"},{"type":"levelaward"}]})
+        if(awardTask && awardTask.length>0){
+            for(var x=0;x<awardTask.length;x++){
+                let tx_id = awardTask[x].txId;
+                let tx = await config.Transaction.find({"_id":tx_id});
+                if(tx.state==1){
+                    return res.send({"resp":"发放奖励进行中"})
+                }
+            }
+        }
         let datas   = await config.Award.find({phenix:phenixId,roundIndex:level,state:0})
         if(datas && datas.length>0){
             for(var i =0;i<datas.length;i++){
@@ -52,7 +62,7 @@ exports.send_award = async function(req, res){
                     await config.Award.update({"_id":datas[i]._id},{$set:{"state":1}});
                 }
             }
-            return res.send({"resp":"success"})
+            return res.send({"resp":"发放奖励进行中"})
         }
     }
     return res.send({"resp":"failure"})
