@@ -45,9 +45,15 @@
                     <td>
                         <% if(value['state']==0){ %>
                             待发放
-                        <% }else{ %>
-                            已发放
-                        <% } %>
+                        <% }else if(value['state']==1){ %>
+                            发放中
+                        <% }else if(value['state']==3){ %>
+                            发放失败
+                        <% }else if(value['state']==2){%>
+                            发送成功
+                        <%}else{%>
+                            ---
+                        <%}%>
                     </td>
                 </tr>
                 <% }) %>

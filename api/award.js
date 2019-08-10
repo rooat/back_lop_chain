@@ -22,6 +22,18 @@ exports.index =async function (req, res) {
     let count = await config.Award.countDocuments({phenix:phenixId,roundIndex:level});
     let balance = await config.web3.eth.getBalance(config.awardSender);
     let waitSend = await config.Award.countDocuments({"phenix":phenixId,"roundIndex":level,"state":0});
+    if(list && list.length>0){
+        for(var y=0;y<list.length;y++){
+            let tas = await config.Task.findOne({"refId":list[y]._id})
+            let tx = await config.Transaction.findOne({"_id":tas.txId})
+            if(tx.state==3){
+                await config.Task.remove({"_id":tas._id});
+                await config.Transaction.remove({"_id":tx._id});
+            }else{
+                list[y].state = tx.state;
+            }
+        }
+    }
    
     res.render('award', {
             address : config.awardSender,
@@ -38,16 +50,16 @@ exports.send_award = async function(req, res){
     let phenixId = req.body.phenixId;
     let level  = req.body.level;
     if(phenixId && level){
-        let awardTask = await config.Task.find({$or:[{"type":"leaderaward"},{"type":"levelaward"}]})
-        if(awardTask && awardTask.length>0){
-            for(var x=0;x<awardTask.length;x++){
-                let tx_id = awardTask[x].txId;
-                let tx = await config.Transaction.find({"_id":tx_id});
-                if(tx.state==1){
-                    return res.send({"resp":"发放奖励进行中"})
-                }
-            }
-        }
+        // let awardTask = await config.Task.find({$or:[{"type":"leaderaward"},{"type":"levelaward"}]})
+        // if(awardTask && awardTask.length>0){
+        //     for(var x=0;x<awardTask.length;x++){
+        //         let tx_id = awardTask[x].txId;
+        //         let tx = await config.Transaction.find({"_id":tx_id});
+        //         if(tx.state==1){
+        //             return res.send({"resp":"发放奖励进行中"})
+        //         }
+        //     }
+        // }
         let datas   = await config.Award.find({phenix:phenixId,roundIndex:level,state:0})
         if(datas && datas.length>0){
             for(var i =0;i<datas.length;i++){
