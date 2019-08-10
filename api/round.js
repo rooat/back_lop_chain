@@ -108,7 +108,7 @@ exports.add_startNextRound = async function(req , res){
             if(txtr.state==2){
                 let startNextRound_data = startNextRound(phenixId,rounds.endBlock);
                 let tx_id = await saveTransaction(req , startNextRound_data);
-                await config.Round.update({_id:_id},{$set:{"state":0,"deployState":2,"deployTime":Date.now()}})
+                await config.Round.update({_id:_id},{$set:{"deployState":2,"deployTime":Date.now()}})
                 await config.Task({
                     refId : _id,
                     txId : tx_id,

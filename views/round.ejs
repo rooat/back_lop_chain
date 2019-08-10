@@ -99,6 +99,10 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
                                 已结束
                             </button>
+                        <% }else if(value['deployState']==2 && !value['state']) {%>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
+                                开启中
+                            </button>
                         <% }else { %>
                             <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
                                 已开启
