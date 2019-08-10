@@ -18,12 +18,13 @@ exports.index =async function (req, res) {
         url += '?';
     }
     let ps = (page-1)*pagesize;
-    let list = await config.Award.find({phenix:phenixId,roundIndex:level}).sort({"amount":-1}).limit(pagesize).skip(ps);
+    let list = await config.Award.find({phenix:phenixId,roundIndex:level}).sort({"state":1,"amount":-1}).limit(pagesize).skip(ps);
     let count = await config.Award.countDocuments({phenix:phenixId,roundIndex:level});
     let balance = await config.web3.eth.getBalance(config.awardSender);
     let waitSend = await config.Award.countDocuments({"phenix":phenixId,"roundIndex":level,"state":0});
    
     res.render('award', {
+            address : config.awardSender,
             balance:balance,
             awardlist: list,
             phenixId : phenixId,
