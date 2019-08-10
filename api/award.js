@@ -25,12 +25,16 @@ exports.index =async function (req, res) {
     if(list && list.length>0){
         for(var y=0;y<list.length;y++){
             let tas = await config.Task.findOne({"refId":list[y]._id})
-            let tx = await config.Transaction.findOne({"_id":tas.txId})
-            if(tx.state==3){
-                await config.Task.remove({"_id":tas._id});
-                await config.Transaction.remove({"_id":tx._id});
-            }else{
-                list[y].state = tx.state;
+            if(tas){
+                let tx = await config.Transaction.findOne({"_id":tas.txId})
+                if(tx){
+                    if(tx.state==3){
+                        await config.Task.remove({"_id":tas._id});
+                        await config.Transaction.remove({"_id":tx._id});
+                    }else{
+                        list[y].state = tx.state;
+                    }
+                }
             }
         }
     }
