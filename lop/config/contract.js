@@ -1,7 +1,7 @@
 var Web3 = require('web3');
 var web3 = new Web3();
 //const ContractAddr = '0x8e43127314a852e357bb50b58b7fad7a457a5e9f';
-const ContractAddr ='0x522bb6fa19286f11081fab9838904ac364273edf'
+const ContractAddr ='0x81142f66049aeb389a50c5baeb09bcf16b939088'
 
 // const MasterNodoContractAddr = '0x8e43127314a852e357bb50b58b7fad7a457a5e9f';
 const DeployBlock = 19912145;
