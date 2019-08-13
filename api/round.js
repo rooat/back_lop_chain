@@ -55,12 +55,12 @@ async function validCreateState(id,type){
     let task_create = await config.Task.find({"refId":id,"type":type});
     if(task_create && task_create.length>0){
         for(var ak=0;ak<task_create.length;ak++){
-            let txxs = await config.Transaction.find({"_id":task_create[ak].txId,"state":3});
-            if(txxs && txxs.length>0){
-                return true;
+            let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
+            if(txxs.state != 3)
+                return false;
             }
         }
-    }
+        return true;
 }
 
 exports.add_anounceNextRound = async function(req , res){
