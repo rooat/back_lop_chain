@@ -17,16 +17,16 @@ exports.index =async function (req, res) {
     }
     let ps = (page-1)*pagesize;
     let list = await config.Phenix.find().sort({"createAt":-1}).limit(pagesize).skip(ps);
-    if(list && list.length>0){
-        for(var xa=0;xa<list.length;xa++){
-            let flag = await validCreateState(list[xa]._id);
-            if(flag==true){
-                list[xa].phenixState = 1;
-            }else{
-                list[xa].phenixState = 0; 
-            }
-        }
-    }
+    // if(list && list.length>0){
+    //     for(var xa=0;xa<list.length;xa++){
+    //         let flag = await validCreateState(list[xa]._id);
+    //         if(flag==true){
+    //             list[xa].phenixState = 1;
+    //         }else{
+    //             list[xa].phenixState = 0; 
+    //         }
+    //     }
+    // }
     let count = await config.Phenix.countDocuments();
     res.render('phenix', {
             phenixlist: list,
