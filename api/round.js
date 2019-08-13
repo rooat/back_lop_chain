@@ -21,24 +21,7 @@ exports.index =async function (req, res) {
     let list = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(pagesize).skip(ps);
     if(list && list.length>0){
         for(var i=0;i<list.length;i++){
-            let task_create = await config.Task.findOne({"refId":list[i]._id,"type":"anounceNextRound"});
-            let flat_create = false;
-            if(task_create){
-               let txxs = await config.Transaction.findOne({"_id":task_create.txId});
-               if(txxs && txxs.state==3){
-                flat_create = true;
-               }
-            }
-            let tasskArr = await config.Task.find({"refId":list[i]._id,"type":"startNextRound"});
-            let flag = false;
-            if(tasskArr && tasskArr.length>0){
-                for(var ik=0;ik<tasskArr.length;ik++){
-                    let taxs = await config.Transaction.findOne({"_id":tasskArr[ik].txId});
-                    if(taxs.state==3){
-                        flag = true;
-                    }
-                }
-            }
+            
             let award_obj = await config.Award.aggregate([ 
                 { $match : { "phenix":list[i].phenix,"roundIndex":list[i].level}}, 
                 { $group : { _id : "$roundIndex", total : {$sum : "$amount"} }} ]);
@@ -46,10 +29,13 @@ exports.index =async function (req, res) {
             if(award_obj && award_obj.length>0){
                 award = award_obj[0].total;
             }
+
+            let flag = await validStartState(list[i]._id);
             if(flag==true){
                 list[i].deployState = 5;
             }
-            if(flat_create ==true){
+            let crate_flag = await validCreateState(list[i]._id)
+            if(crate_flag ==true){
                 list[i].deployState = 6; 
             }
             list[i].award = Number(award).toFixed(4);
@@ -64,7 +50,30 @@ exports.index =async function (req, res) {
             page: showPage.show(url, count, pagesize, page),
         });
 };
-
+async function validCreateState(id){
+    let task_create = await config.Task.find({"refId":list[i]._id,"type":"anounceNextRound"});
+    if(task_create && task_create.length>0){
+        for(var ak=0;ak<task_create.length;ak++){
+            let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
+            if(txxs && txxs.state==3){
+             return true;
+            }
+        }
+    }
+    return false;
+}
+async function validStartState(id){
+    let tasskArr = await config.Task.find({"refId":id,"type":"startNextRound"});
+    if(tasskArr && tasskArr.length>0){
+        for(var ik=0;ik<tasskArr.length;ik++){
+            let taxs = await config.Transaction.findOne({"_id":tasskArr[ik].txId});
+            if(taxs.state==3){
+                return true
+            }
+        }
+    }
+    return false;
+}
 
 exports.add_anounceNextRound = async function(req , res){
     let phenixId = req.body.phenixId;
@@ -139,6 +148,8 @@ exports.add_startNextRound = async function(req , res){
                     type : "startNextRound"
                 }).save()
                 return res.send({"resp":"success"})
+                ObjectId("5d5284d7357ec588e4cdc074")
+                ObjectId("5d528530357ec588e4cdc075")
          //   }
           //  return res.send({"resp":"Round创建中..."})
         }
