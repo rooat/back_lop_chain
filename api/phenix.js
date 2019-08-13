@@ -17,12 +17,32 @@ exports.index =async function (req, res) {
     }
     let ps = (page-1)*pagesize;
     let list = await config.Phenix.find().sort({"createAt":-1}).limit(pagesize).skip(ps);
+    if(list && list.length>0){
+        for(var xa=0;xa<list.length;xa++){
+            let flag = await validCreateState(list[xa]._id);
+            if(flag==true){
+                list[xa].phenixState = 1;
+            }
+        }
+    }
     let count = await config.Phenix.countDocuments();
     res.render('phenix', {
             phenixlist: list,
             page: showPage.show(url, count, pagesize, page),
         });
 };
+async function validCreateState(id){
+    let tasskArr = await config.Task.find({"refId":id,"type":"startNewPhenix"});
+    if(tasskArr && tasskArr.length>0){
+        for(var ik=0;ik<tasskArr.length;ik++){
+            let taxs = await config.Transaction.findOne({"_id":tasskArr[ik].txId});
+            if(taxs.state==3){
+                return true
+            }
+        }
+    }
+    return false;
+}
 
 exports.add_startNewPhenix = async function(req , res){
     let startGoal = req.body.startGoal;
