@@ -158,6 +158,7 @@ var Award = new Schema({ //动态奖励
   amount: {type: Number, default: 0},
   createAt: { type: Date, default: Date.now },
 }, { autoIndex: false })
+
 Award.index({inviteCode: 1, phenix: 1, roundIndex: 1, type:1}, {unique: true});
 //etzlop:etz123456@
 var gameConn = mongoose.createConnection('mongodb://etzlop:etz123456@localhost:27017/lop', { useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true });

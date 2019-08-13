@@ -21,6 +21,16 @@ exports.index =async function (req, res) {
     let list = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(pagesize).skip(ps);
     if(list && list.length>0){
         for(var i=0;i<list.length;i++){
+            let tasskArr = await config.Task.find({"refId":list[i]._id,"type":"startNextRound"});
+            let flag = false;
+            if(tasskArr && tasskArr.length>0){
+                for(var ik=0;ik<tasskArr.length;ik++){
+                    let taxs = await config.Transaction.findOne({"_id":tasskArr[ik].txId});
+                    if(taxs.state!=1 || taxs.state!=2){
+                        flag = true;
+                    }
+                }
+            }
             let award_obj = await config.Award.aggregate([ 
                 { $match : { "phenix":list[i].phenix,"roundIndex":list[i].level}}, 
                 { $group : { _id : "$roundIndex", total : {$sum : "$amount"} }} ]);
@@ -28,6 +38,9 @@ exports.index =async function (req, res) {
                 if(award_obj && award_obj.length>0){
                     award = award_obj[0].total;
                 }
+            if(flag==true){
+                list[i].deployState = 5;
+            }
             list[i].award = Number(award).toFixed(4);
         }
     }
@@ -98,7 +111,7 @@ exports.add_startNextRound = async function(req , res){
     let _id = req.body.id;
     let rounds = await config.Round.findOne({_id:_id});
    
-    let task = await config.Task.findOne({"refId":_id});
+    let task = await config.Task.findOne({"refId":_id,"type":"anounceNextRound"});
     if(task && rounds){
         let phenixId = rounds.phenix
         let tx_id = task.txId;

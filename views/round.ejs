@@ -103,7 +103,11 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
                                 开启中
                             </button>
-                        <% }else { %>
+                        <% }else if(value['deployState']==5){ %>
+                            <button type="button" class="btn btn-primary" onclick="add_startNextRound('<%= value['_id']%>')">
+                                重新开启
+                            </button
+                        <% }else {%>
                             <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
                                 已开启
                                 </button>
