@@ -51,7 +51,7 @@ exports.index =async function (req, res) {
         });
 };
 async function validCreateState(id){
-    let task_create = await config.Task.find({"refId":list[i]._id,"type":"anounceNextRound"});
+    let task_create = await config.Task.find({"refId":id,"type":"anounceNextRound"});
     if(task_create && task_create.length>0){
         for(var ak=0;ak<task_create.length;ak++){
             let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
