@@ -17,7 +17,18 @@ exports.index =async function (req, res) {
     }
     let ps = (page-1)*pagesize;
     let list = await config.Phenix.find().sort({"createAt":-1}).limit(pagesize).skip(ps);
-    
+    if(list && list.length>0){
+        for(var xk=0;xk<list.length;xk++){
+            let tax = await config.Task.findOne({"refId":list[xk]._id,"type":"startNewPhenix"});
+            if(tax){
+                let txsa = await config.Transaction.findOne({"_id":tax.txId});
+                if(txsa && txsa.state==3){
+                    list[xk].txstate = 1;
+                }
+                
+            }
+        }
+    } 
     let count = await config.Phenix.countDocuments();
     res.render('phenix', {
             phenixlist: list,

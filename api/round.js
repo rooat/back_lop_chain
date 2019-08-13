@@ -120,7 +120,7 @@ exports.add_startNextRound = async function(req , res){
     let rounds = await config.Round.findOne({_id:_id});
    
  //   let task = await config.Task.findOne({"refId":_id,"type":"anounceNextRound"});
-    if(task && rounds){
+    if( rounds){
         let phenixId = rounds.phenix
      //   let tx_id = task.txId;
         let current_block = await config.web3.eth.getBlockNumber();

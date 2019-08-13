@@ -57,11 +57,14 @@
                     </td>
                     <td><%=  new Date(value['createAt']).getFullYear()+'-'+(new Date(value['createAt']).getMonth()+1)+'-'+new Date(value['createAt']).getDate()+' '+new Date(value['createAt']).getHours()+':'+new Date(value['createAt']).getMinutes()+':'+new Date(value['createAt']).getSeconds() %></td>
                     <td>
-                        <% if(value['state']!=null){ %>
+                        <% if(value['txstate']==1) {%>
                             <button type="button" class="btn btn-warning" onclick="roundManBtn('<%=value['phenixId']%>')">
                                     轮次管理
                             </button>
-                        >
+                        <% }else if(value['state']!=null){ %>
+                            <button type="button" class="btn btn-warning" disabled="disabled">
+                                创建失败
+                            </button> 
                         <% }else{ %>
                             <button type="button" class="btn btn-warning" disabled="disabled">
                                     开启中...
