@@ -26,7 +26,7 @@ exports.index =async function (req, res) {
             if(tasskArr && tasskArr.length>0){
                 for(var ik=0;ik<tasskArr.length;ik++){
                     let taxs = await config.Transaction.findOne({"_id":tasskArr[ik].txId});
-                    if(taxs.state!=1 || taxs.state!=2){
+                    if(taxs.state==3){
                         flag = true;
                     }
                 }
@@ -34,10 +34,10 @@ exports.index =async function (req, res) {
             let award_obj = await config.Award.aggregate([ 
                 { $match : { "phenix":list[i].phenix,"roundIndex":list[i].level}}, 
                 { $group : { _id : "$roundIndex", total : {$sum : "$amount"} }} ]);
-                let award = 0;
-                if(award_obj && award_obj.length>0){
-                    award = award_obj[0].total;
-                }
+            let award = 0;
+            if(award_obj && award_obj.length>0){
+                award = award_obj[0].total;
+            }
             if(flag==true){
                 list[i].deployState = 5;
             }
