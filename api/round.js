@@ -29,16 +29,16 @@ exports.index =async function (req, res) {
             if(award_obj && award_obj.length>0){
                 award = award_obj[0].total;
             }
-            await validCreateState(list[i]._id,"startNextRound");
-            await validCreateState(list[i]._id,"anounceNextRound")
-            // let flag = await validCreateState(list[i]._id,"startNextRound");
-            // if(flag==true){
-            //     list[i].deployState = 5;
-            // }
-            // let crate_flag = await validCreateState(list[i]._id,"anounceNextRound")
-            // if(crate_flag ==true){
-            //     list[i].deployState = 6; 
-            // }
+            // await validCreateState(list[i]._id,"startNextRound");
+            // await validCreateState(list[i]._id,"anounceNextRound")
+            let flag = await validCreateState(list[i]._id,"startNextRound");
+            if(flag==true){
+                list[i].deployState = 5;
+            }
+            let crate_flag = await validCreateState(list[i]._id,"anounceNextRound")
+            if(crate_flag ==true){
+                list[i].deployState = 6; 
+            }
             list[i].award = Number(award).toFixed(4);
         }
     }
@@ -55,9 +55,9 @@ async function validCreateState(id,type){
     let task_create = await config.Task.find({"refId":id,"type":type});
     if(task_create && task_create.length>0){
         for(var ak=0;ak<task_create.length;ak++){
-            let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
-            if(txxs && txxs.state==3){
-              await config.Task.remove({"_id":task_create[ak]._id});
+            let txxs = await config.Transaction.find({"_id":task_create[ak].txId,"state":3});
+            if(txxs && txxs.length>0){
+                return true;
             }
         }
     }
