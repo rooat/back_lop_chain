@@ -29,7 +29,8 @@ exports.index =async function (req, res) {
             if(award_obj && award_obj.length>0){
                 award = award_obj[0].total;
             }
-
+            await validCreateState(list[i]._id,"startNextRound");
+            await validCreateState(list[i]._id,"anounceNextRound")
             // let flag = await validCreateState(list[i]._id,"startNextRound");
             // if(flag==true){
             //     list[i].deployState = 5;
