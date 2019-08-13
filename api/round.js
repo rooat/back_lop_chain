@@ -30,14 +30,14 @@ exports.index =async function (req, res) {
                 award = award_obj[0].total;
             }
 
-            let flag = await validCreateState(list[i]._id,"startNextRound");
-            if(flag==true){
-                list[i].deployState = 5;
-            }
-            let crate_flag = await validCreateState(list[i]._id,"anounceNextRound")
-            if(crate_flag ==true){
-                list[i].deployState = 6; 
-            }
+            // let flag = await validCreateState(list[i]._id,"startNextRound");
+            // if(flag==true){
+            //     list[i].deployState = 5;
+            // }
+            // let crate_flag = await validCreateState(list[i]._id,"anounceNextRound")
+            // if(crate_flag ==true){
+            //     list[i].deployState = 6; 
+            // }
             list[i].award = Number(award).toFixed(4);
         }
     }
@@ -56,11 +56,10 @@ async function validCreateState(id,type){
         for(var ak=0;ak<task_create.length;ak++){
             let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
             if(txxs && txxs.state==3){
-             return true;
+              await config.Task.remove({"_id":task_create[ak]._id});
             }
         }
     }
-    return false;
 }
 
 exports.add_anounceNextRound = async function(req , res){
