@@ -22,6 +22,8 @@ exports.index =async function (req, res) {
             let flag = await validCreateState(list[xa]._id);
             if(flag==true){
                 list[xa].phenixState = 1;
+            }else{
+                list[xa].phenixState = 0; 
             }
         }
     }
