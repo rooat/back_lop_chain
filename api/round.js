@@ -21,6 +21,14 @@ exports.index =async function (req, res) {
     let list = await config.Round.find({phenix:phenixId}).sort({"level":-1}).limit(pagesize).skip(ps);
     if(list && list.length>0){
         for(var i=0;i<list.length;i++){
+            let task_create = await config.Task.findOne({"refId":list[i]._id,"type":"anounceNextRound"});
+            let flat_create = false;
+            if(task_create){
+               let txxs = await config.Transaction.findOne({"_id":task_create.txId});
+               if(txxs && txxs.state==3){
+                flat_create = true;
+               }
+            }
             let tasskArr = await config.Task.find({"refId":list[i]._id,"type":"startNextRound"});
             let flag = false;
             if(tasskArr && tasskArr.length>0){
@@ -40,6 +48,9 @@ exports.index =async function (req, res) {
             }
             if(flag==true){
                 list[i].deployState = 5;
+            }
+            if(flat_create ==true){
+                list[i].deployState = 6; 
             }
             list[i].award = Number(award).toFixed(4);
         }
@@ -111,14 +122,14 @@ exports.add_startNextRound = async function(req , res){
     let _id = req.body.id;
     let rounds = await config.Round.findOne({_id:_id});
    
-    let task = await config.Task.findOne({"refId":_id,"type":"anounceNextRound"});
+ //   let task = await config.Task.findOne({"refId":_id,"type":"anounceNextRound"});
     if(task && rounds){
         let phenixId = rounds.phenix
-        let tx_id = task.txId;
+     //   let tx_id = task.txId;
         let current_block = await config.web3.eth.getBlockNumber();
         if(rounds.endBlock>Number(current_block)){
-            let txtr  = await config.Transaction.findOne({"_id":tx_id});
-            if(txtr.state==2){
+      //      let txtr  = await config.Transaction.findOne({"_id":tx_id});
+      //      if(txtr.state==2){
                 let startNextRound_data = startNextRound(phenixId,rounds.endBlock);
                 let tx_id = await saveTransaction(req , startNextRound_data);
                 await config.Round.update({_id:_id},{$set:{"deployState":2,"deployTime":Date.now()}})
@@ -128,8 +139,8 @@ exports.add_startNextRound = async function(req , res){
                     type : "startNextRound"
                 }).save()
                 return res.send({"resp":"success"})
-            }
-            return res.send({"resp":"Round创建中..."})
+         //   }
+          //  return res.send({"resp":"Round创建中..."})
         }
         return res.send({"resp":"change_endblock"})
     }
