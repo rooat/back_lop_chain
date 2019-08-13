@@ -91,7 +91,7 @@
                         <button type="button" class="btn btn-default" onclick="checkbtn('<%= value['phenix']%>','<%= value['level']%>')">
                             查看
                         </button>
-                        <% if(value['deployState']!=2 && (value['deployState']==0 || !value['state'])){ %>
+                        <% if(value['deployState']!=2 && (value['deployState']==0 || value['state']==null)){ %>
                             <button type="button" class="btn btn-primary" onclick="add_startNextRound('<%= value['_id']%>')">
                                 开启
                             </button>
