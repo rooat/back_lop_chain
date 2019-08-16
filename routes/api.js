@@ -8,6 +8,7 @@ var notice = require('../api/notice');
 var user = require('../api/user')
 var account = require('../api/account')
 var common = require('../api/common')
+var datas = require('../api/datas')
 
 var auth = function (req, res, next) {
 	if (req.session && req.session.isLogged) {
@@ -63,5 +64,7 @@ router.get('/account',account.index);
 router.post('/updateAmount',account.add_amount);
 
 router.get('/latest_blocknumber',common.getBlockNumber);
+
+router.get('/data_address',datas.index);
 
 module.exports = router;

@@ -1,0 +1,42 @@
+<%- include header %>
+<div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+<%- include left %>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="#">数据管理</a></li>
+                <li><a href="/data_address">账户统计</a></li>
+            </ol>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>地址总数</th>
+                        <th>账号总数</th>
+                        <th>有效账户总数</th>
+                        <th>时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><%=  dataObj.address_count %></th>
+                        <th><%=  dataObj.account_count %></th>
+                        <th><%=  dataObj.valid_address_count %></th>
+                        <th><%= new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds() %></th>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="col-lg-12 text-center">
+                <ul class="pagination">
+                    <%- include page %>
+                </ul>
+        </div>
+    </div>
+</div>
+
+
+<%- include footer %>
+<script type="text/javascript">
+</script>

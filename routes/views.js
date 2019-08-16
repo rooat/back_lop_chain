@@ -33,6 +33,8 @@ router.get('/award',function(req, res, next) {
 router.get('/notice', function(req, res, next) {
   res.render('notice', { title: 'Contact' });
 });
-
+router.get('/data_address', function(req, res, next) {
+  res.render('address_cal', { title: 'Contact' });
+})
 
 module.exports = router;
