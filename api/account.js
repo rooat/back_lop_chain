@@ -33,7 +33,7 @@ exports.add_amount =async function (req, res) {
     let id = req.body.id; 
     let amount = req.body.amount;
     let account = await config.Account.findOne({"_id":id});
-    if(account && amount && amount>0){
+    if(account && amount ){
         await config.Account.update({"_id":id},{$set:{"offerAchievement":amount}});
         return res.send({"resp":"success"});
     }
