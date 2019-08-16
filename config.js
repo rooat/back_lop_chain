@@ -15,10 +15,12 @@ var tokenAddress= "0xbc923f769f56493230fdc45db5ca43742862fb20";//合约地址
 
 const token = require('./contract/tokenABI.json');
 
+var sender = "0xbD9e55d54928b21b1a79385E9F5f78373a04B744"
+var awardSender = "0xf9353Ef28086d088612e41Ea6882F321Ac9D6b80"
 
 // var sender = "0xdCb25d3710645C2fe3Fd7e04601De50bD54ed124";
-var sender = "0xDfaB41faf59A7235cB9c4574D5aE4ca0FD5227D3"
-var awardSender = "0x00a5C755C8a359c3113B842486Ffd197AF0B92fB"
+// var sender = "0xDfaB41faf59A7235cB9c4574D5aE4ca0FD5227D3"
+// var awardSender = "0x00a5C755C8a359c3113B842486Ffd197AF0B92fB"
 
 var Web3 = require('web3');
 var net = require('net');
