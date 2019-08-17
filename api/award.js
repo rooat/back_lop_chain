@@ -68,7 +68,7 @@ exports.send_award = async function(req, res){
         if(datas && datas.length>0){
             for(var i =0;i<datas.length;i++){
                 let accounts = await config.Account.findOne({"inviteCode":datas[i].inviteCode})
-                if(accounts){
+                if(accounts && accounts.address && accounts.address.length==42){
                     let tx_id = await saveTransaction(config.web3.utils.toWei(String(datas[i].amount),'ether'),accounts.address);
                     await config.Task({
                         refId : datas[i]._id,
