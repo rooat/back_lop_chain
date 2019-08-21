@@ -19,7 +19,7 @@
                     </button> 
                 <% } %>
                 <span>Sender Address : </span><span><%= address %></span> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>Sender Balance : </span><span><%= balance %></span>
+                <span>Sender Balance : </span><span><%= Number(balance/10**18).toFixed(4) %></span>
             </div>
             <input name="phenixId" id="phenixId" class="form-contol" type="hidden" value="<%= phenixId %>"/>
             <table class="table">
@@ -89,6 +89,9 @@
         }).then(function(response){
             $("#modaltext").html(response.data.resp);
             $("#testmodal").modal("toggle")
+            setTimeout(function(){
+                window.location.href="/award?phenixId="+phenixId+"&level="+level
+            },1500)
         })
     }
 

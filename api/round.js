@@ -32,11 +32,11 @@ exports.index =async function (req, res) {
             // await validCreateState(list[i]._id,"startNextRound");
             // await validCreateState(list[i]._id,"anounceNextRound")
             let flag = await validCreateState(list[i]._id,"startNextRound");
-            if(flag==true){
+            if(flag==1){
                 list[i].deployState = 5;
             }
             let crate_flag = await validCreateState(list[i]._id,"anounceNextRound")
-            if(crate_flag ==true){
+            if(crate_flag ==1){
                 list[i].deployState = 6; 
             }
             list[i].award = Number(award).toFixed(4);
@@ -56,11 +56,13 @@ async function validCreateState(id,type){
     if(task_create && task_create.length>0){
         for(var ak=0;ak<task_create.length;ak++){
             let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
-            if(txxs.state != 3)
-                return false;
+            if(txxs.state != 3){
+                return 0;
             }
-        }
-        return true;
+         }
+         return 1;
+     }
+     return 2;
 }
 
 exports.add_anounceNextRound = async function(req , res){

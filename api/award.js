@@ -18,26 +18,20 @@ exports.index =async function (req, res) {
         url += '?';
     }
     let ps = (page-1)*pagesize;
-    let list = await config.Award.find({phenix:phenixId,roundIndex:level}).sort({"state":1,"amount":-1}).limit(pagesize).skip(ps);
     let count = await config.Award.countDocuments({phenix:phenixId,roundIndex:level});
     let balance = await config.web3.eth.getBalance(config.awardSender);
     let waitSend = await config.Award.countDocuments({"phenix":phenixId,"roundIndex":level,"state":0});
-    if(list && list.length>0){
-        for(var y=0;y<list.length;y++){
-            let tas = await config.Task.findOne({"refId":list[y]._id})
-            if(tas){
-                let tx = await config.Transaction.findOne({"_id":tas.txId})
-                if(tx){
-                    if(tx.state==3){
-                        await config.Task.remove({"_id":tas._id});
-                        await config.Transaction.remove({"_id":tx._id});
-                    }else{
-                        list[y].state = tx.state;
-                    }
+    let list_t = await config.Award.find({phenix:phenixId,roundIndex:level});
+    if(list_t && list_t.length>0){
+        for(var y=0;y<list_t.length;y++){
+            let flag = await validCreateState(list_t[y]._id,"leaderaward","levelaward");
+                if(flag!=0){
+                  //  list[y].state = 4;
+                    await config.Award.update({"_id":list_t[y]._id},{$set:{"state":0}})
                 }
-            }
         }
     }
+    let list = await config.Award.find({phenix:phenixId,roundIndex:level}).sort({"state":1,"amount":-1}).limit(pagesize).skip(ps);
    
     res.render('award', {
             address : config.awardSender,
@@ -49,21 +43,23 @@ exports.index =async function (req, res) {
             page: showPage.show(url, count, pagesize, page),
         });
 };
+async function validCreateState(id,type1,type2){
+    let task_create = await config.Task.find({"refId":id,$or:[{"type":type1},{"type":type2}]});
+    if(task_create && task_create.length>0){
+        for(var ak=0;ak<task_create.length;ak++){
+            let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
+            if(txxs.state != 3){
+                return 0;
+            }
+        }
+    }
+    return 1
+}
 
 exports.send_award = async function(req, res){
     let phenixId = req.body.phenixId;
     let level  = req.body.level;
     if(phenixId && level){
-        // let awardTask = await config.Task.find({$or:[{"type":"leaderaward"},{"type":"levelaward"}]})
-        // if(awardTask && awardTask.length>0){
-        //     for(var x=0;x<awardTask.length;x++){
-        //         let tx_id = awardTask[x].txId;
-        //         let tx = await config.Transaction.find({"_id":tx_id});
-        //         if(tx.state==1){
-        //             return res.send({"resp":"发放奖励进行中"})
-        //         }
-        //     }
-        // }
         let datas   = await config.Award.find({phenix:phenixId,roundIndex:level,state:0})
         if(datas && datas.length>0){
             for(var i =0;i<datas.length;i++){
