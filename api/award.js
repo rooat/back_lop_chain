@@ -24,10 +24,13 @@ exports.index =async function (req, res) {
     let list_t = await config.Award.find({phenix:phenixId,roundIndex:level});
     if(list_t && list_t.length>0){
         for(var y=0;y<list_t.length;y++){
+
             let flag = await validCreateState(list_t[y]._id,"leaderaward","levelaward");
                 if(flag!=0){
                   //  list[y].state = 4;
                     await config.Award.update({"_id":list_t[y]._id},{$set:{"state":0}})
+                }else{
+                    await config.Award.update({"_id":list_t[y]._id},{$set:{"state":2}}) 
                 }
         }
     }
