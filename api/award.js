@@ -26,11 +26,13 @@ exports.index =async function (req, res) {
         for(var y=0;y<list_t.length;y++){
 
             let flag = await validCreateState(list_t[y]._id,"leaderaward","levelaward");
-                if(flag!=0){
+                if(flag==3){
                   //  list[y].state = 4;
                     await config.Award.update({"_id":list_t[y]._id},{$set:{"state":0}})
-                }else{
-                    await config.Award.update({"_id":list_t[y]._id},{$set:{"state":2}}) 
+                }else if(flag==1){
+                    await config.Award.update({"_id":list_t[y]._id},{$set:{"state":1}})
+                }else if(flag==2){
+                    await config.Award.update({"_id":list_t[y]._id},{$set:{"state":2}})
                 }
         }
     }
@@ -49,14 +51,17 @@ exports.index =async function (req, res) {
 async function validCreateState(id,type1,type2){
     let task_create = await config.Task.find({"refId":id,$or:[{"type":type1},{"type":type2}]});
     if(task_create && task_create.length>0){
+        
         for(var ak=0;ak<task_create.length;ak++){
             let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
-            if(txxs.state != 3){
-                return 0;
+            if(txxs.state == 1){
+                return 1;
+            }else if(txxs.state==2){
+                return 2;
             }
         }
     }
-    return 1
+    return 3
 }
 
 exports.send_award = async function(req, res){
