@@ -21,7 +21,7 @@ exports.index =async function (req, res) {
     let count = await config.Award.countDocuments({phenix:phenixId,roundIndex:level});
     let balance = await config.web3.eth.getBalance(config.awardSender);
     let waitSend = await config.Award.countDocuments({"phenix":phenixId,"roundIndex":level,"state":0});
-    let list_t = await config.Award.find({phenix:phenixId,roundIndex:level});
+    let list_t = await config.Award.find({phenix:phenixId,roundIndex:level,state:{$ne:2}});
     if(list_t && list_t.length>0){
         for(var y=0;y<list_t.length;y++){
 
