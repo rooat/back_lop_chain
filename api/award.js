@@ -51,13 +51,14 @@ exports.index =async function (req, res) {
 async function validCreateState(id,type1,type2){
     let task_create = await config.Task.find({"refId":id,$or:[{"type":type1},{"type":type2}]});
     if(task_create && task_create.length>0){
-        
         for(var ak=0;ak<task_create.length;ak++){
             let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
-            if(txxs.state == 1 || txxs.state==0){
-                return 1;
-            }else if(txxs.state==2){
-                return 2;
+            if(txxs){
+                if(txxs.state == 1 || txxs.state==0){
+                    return 1;
+                }else if(txxs.state==2){
+                    return 2;
+                }
             }
         }
     }
