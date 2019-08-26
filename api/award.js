@@ -54,12 +54,10 @@ async function validCreateState(id,type1,type2){
         
         for(var ak=0;ak<task_create.length;ak++){
             let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
-            if(txxs.state == 1){
+            if(txxs.state == 1 || txxs.state==0){
                 return 1;
             }else if(txxs.state==2){
                 return 2;
-            }else if(txxs.state==0){
-                return 0;
             }
         }
     }
