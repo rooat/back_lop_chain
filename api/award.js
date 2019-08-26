@@ -58,6 +58,8 @@ async function validCreateState(id,type1,type2){
                 return 1;
             }else if(txxs.state==2){
                 return 2;
+            }else if(txxs.state==0){
+                return 0;
             }
         }
     }
