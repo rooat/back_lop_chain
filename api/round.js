@@ -32,11 +32,11 @@ exports.index =async function (req, res) {
             // await validCreateState(list[i]._id,"startNextRound");
             // await validCreateState(list[i]._id,"anounceNextRound")
             let flag = await validCreateState(list[i]._id,"startNextRound");
-            if(flag==1){
+            if(flag==3){
                 list[i].deployState = 5;
-            }
+            } 
             let crate_flag = await validCreateState(list[i]._id,"anounceNextRound")
-            if(crate_flag ==1){
+            if(crate_flag ==3){
                 list[i].deployState = 6; 
             }
             list[i].award = Number(award).toFixed(4);
@@ -52,18 +52,22 @@ exports.index =async function (req, res) {
         });
 };
 async function validCreateState(id,type){
-    let task_create = await config.Task.find({"refId":id,"type":type});
-    if(task_create && task_create.length>0){
+    let task_create = await config.Task.find({"refId":id,"type":type}); 
+     if(task_create && task_create.length>0){
         for(var ak=0;ak<task_create.length;ak++){
             let txxs = await config.Transaction.findOne({"_id":task_create[ak].txId});
-            if(txxs.state != 3){
-                return 0;
+            if(txxs){
+                if(txxs.state == 1 || txxs.state==0){
+                    return 1;
+                }else if(txxs.state==2){
+                    return 2;
+                }
             }
-         }
-         return 1;
-     }
-     return 2;
+        }
+    }
+    return 3
 }
+
 
 exports.add_anounceNextRound = async function(req , res){
     let phenixId = req.body.phenixId;
