@@ -95,6 +95,10 @@
                             <button type="button" class="btn btn-primary" onclick="add_startNextRound('<%= value['_id']%>')">
                                 开启
                             </button>
+                        <% if(value['state']==0) {%>
+                            <button type="button" class="btn btn-primary" onclick="add_currentRoundSucceed('<%= value['_id']%>')">
+                                进行中
+                            </button> 
                         <% }else if(value['state']==1 ||value['state']==3 || value['deployState']==1 ||value['deployState']==3){ %>
                                 <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
                                 已结束
@@ -102,7 +106,7 @@
                         <% }else if(value['deployState']==2 && value['state']==null) {%>
                             <button type="button" class="btn btn-default" data-dismiss="modal" disabled="disabled">
                                 开启中
-                            </button>
+                            </button> 
                         <% }else if(value['deployState']==5){ %>
                             <button type="button" class="btn btn-primary" onclick="add_startNextRound('<%= value['_id']%>')">
                                 重新开启
