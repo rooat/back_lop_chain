@@ -116,7 +116,7 @@
         // alert(invitecode_deposit)
         axios.post('/calculateTotal',{"inviteCode":invitecode_deposit}).then(function(res){
             // console.log(res.data.resp)
-            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;"+Number(res.data.resp).toFixed(4))
+            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;deposit &nbsp;:&nbsp;"+Number(res.data.resp.deposit).toFixed(4)+";withdraw &nbsp;:&nbsp;"+Number(res.data.resp.withdraw).toFixed(4))
         })
     }
 </script>
