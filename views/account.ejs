@@ -10,6 +10,9 @@
             <div class="row" style="margin-left:10px">
                <input type="text" style="border-radius: 7px;margin-right: 2%; height: 30px;font-size: 18px;" id="invitecodesearch" /><button onclick="searchaccount()" class="btn btn-primary" placeholder="输入值">搜索</button>
                <input type="text" style="border-radius: 7px;margin-right: 2%; height: 30px;font-size: 18px;" id="invitecode_deposit" /><button onclick="calaccount_deposit()" class="btn btn-primary" placeholder="输入值">伞下充值提现总量查询</button>  
+                
+            </div>
+            <div class="row" style="margin-left:10px">
                 <span id="total_deposit_value"></span>
             </div>
             <table class="table" style="table-layout:fixed;">
@@ -120,7 +123,7 @@
             let withdraw = res.data.resp.withdraw;
             let member = res.data.resp.member;
             let subs = Number(deposit)-Number(withdraw);
-            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;deposit &nbsp;:&nbsp;"+Number(deposit).toFixed(4)+";----withdraw &nbsp;:&nbsp;"+Number(withdraw).toFixed(4)+";----value&nbsp;:&nbsp;"+Number(subs).toFixed(4)+"----member;"+member)
+            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;充值 &nbsp;:&nbsp;"+Number(deposit).toFixed(4)+";----提现 &nbsp;:&nbsp;"+Number(withdraw).toFixed(4)+";----差额&nbsp;:&nbsp;"+Number(subs).toFixed(4)+"----人数;"+member)
         })
     }
 </script>
