@@ -118,8 +118,9 @@
             // console.log(res.data.resp)
             let deposit = res.data.resp.deposit;
             let withdraw = res.data.resp.withdraw;
+            let member = res.data.resp.member;
             let subs = Number(deposit)-Number(withdraw);
-            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;deposit &nbsp;:&nbsp;"+Number(deposit).toFixed(4)+";----withdraw &nbsp;:&nbsp;"+Number(withdraw).toFixed(4)+";----value&nbsp;:&nbsp;"+Number(subs).toFixed(4))
+            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;deposit &nbsp;:&nbsp;"+Number(deposit).toFixed(4)+";----withdraw &nbsp;:&nbsp;"+Number(withdraw).toFixed(4)+";----value&nbsp;:&nbsp;"+Number(subs).toFixed(4)+"----member;"+member)
         })
     }
 </script>

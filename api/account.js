@@ -41,15 +41,18 @@ exports.add_amount =async function (req, res) {
 };
 var totalDeposit = 0;
 var totalWithdraw = 0;
+var totalMember = 0;
 exports.calculate_total = async function (req, res) {
     let invite_code = req.body.inviteCode;
     // console.log("invite_code---",invite_code)
     await findInvite(invite_code);
     let deposit_total =totalDeposit;
     let withdraw_total =totalWithdraw;
+    let member_total = totalMember;
     totalDeposit = 0;
-    totalWithdraw = 0; 
-    return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total}});
+    totalWithdraw = 0;
+    totalMember = 0;
+    return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total,"member":member_total}});
 }
 
 async function findInvite(invite_code){
@@ -63,6 +66,7 @@ async function findInvite(invite_code){
            // console.log("deposit=="+deposit,"invite_code--"+invite_code);
             totalDeposit += Number(deposit);
             totalWithdraw += Number(withdraw);
+            totalMember++;
             findInvite(inviteArr[index].inviteCode);
         }
     }
