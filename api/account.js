@@ -57,29 +57,26 @@ exports.calculate_total = async function (req, res) {
         deposit_total =totalDeposit;
         withdraw_total =totalWithdraw;
         member_total = totalMember;
+        totalDeposit = 0;
+        totalWithdraw = 0;
+        totalMember = 0;
         dataMap.set(invite_code,{"deposit_total":deposit_total,"withdraw_total":withdraw_total,"member_total":member_total})
         setTimeout(function(){
             dataMap = new Map();
-        },120000)
+        },10000)
     }
-    totalDeposit = 0;
-    totalWithdraw = 0;
-    totalMember = 0;
     return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total,"member":member_total}});
 }
 
 async function findInvite(invite_code){
-    console.log("invite_code==",invite_code)
     let inviteArr = await config.Account.find({"inviterCode":invite_code});
-    // console.log(inviteArr);
     if(inviteArr && inviteArr.length>0){
+        totalMember += inviteArr.length;
         for (let index = 0; index < inviteArr.length; index++) {
             let deposit = inviteArr[index].historyDeposit;
             let withdraw = inviteArr[index].historyWithdraw;
-           // console.log("deposit=="+deposit,"invite_code--"+invite_code);
             totalDeposit += Number(deposit);
             totalWithdraw += Number(withdraw);
-            totalMember++;
             findInvite(inviteArr[index].inviteCode);
         }
     }
