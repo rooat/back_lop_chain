@@ -53,22 +53,18 @@ exports.calculate_total = async function (req, res) {
         let data = dataMap.get(invite_code);
         return res.send({"resp":{"deposit":data.deposit_total,"withdraw":data.withdraw_total,"member":data.member_total}}); 
     }else{
-        let flag = await findInvite(invite_code);
-        if(!flag){
-            deposit_total =totalDeposit;
-            withdraw_total =totalWithdraw;
-            member_total = totalMember;
-            totalDeposit = 0;
-            totalWithdraw = 0;
-            totalMember = 0;
-            dataMap.set(invite_code,{"deposit_total":deposit_total,"withdraw_total":withdraw_total,"member_total":member_total})
-            setTimeout(function(){
-                dataMap = new Map();
-            },10000)
-            return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total,"member":member_total}});
-        }else{
-            return res.send({"resp":{"deposit":0.001,"withdraw":0.001,"member":0}});
-        }
+        await findInvite(invite_code);
+        deposit_total =totalDeposit;
+        withdraw_total =totalWithdraw;
+        member_total = totalMember;
+        totalDeposit = 0;
+        totalWithdraw = 0;
+        totalMember = 0;
+        dataMap.set(invite_code,{"deposit_total":deposit_total,"withdraw_total":withdraw_total,"member_total":member_total})
+        setTimeout(function(){
+            dataMap = new Map();
+        },60000)
+        return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total,"member":member_total}});
     }
 }
 
@@ -82,10 +78,8 @@ async function findInvite(invite_code){
                 totalDeposit += Number(deposit);
                 totalWithdraw += Number(withdraw);
                 totalMember++;
-                findInvite(inviteArr[index].inviteCode);
+                await findInvite(inviteArr[index].inviteCode);
             }
-        }else{
-            return false;
         }
     }
 }
