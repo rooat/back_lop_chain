@@ -69,15 +69,17 @@ exports.calculate_total = async function (req, res) {
 }
 
 async function findInvite(invite_code){
-    let inviteArr = await config.Account.find({"inviterCode":invite_code});
-    if(inviteArr && inviteArr.length>0){
-        totalMember += inviteArr.length;
-        for (let index = 0; index < inviteArr.length; index++) {
-            let deposit = inviteArr[index].historyDeposit;
-            let withdraw = inviteArr[index].historyWithdraw;
-            totalDeposit += Number(deposit);
-            totalWithdraw += Number(withdraw);
-            findInvite(inviteArr[index].inviteCode);
+    if(invite_code>0){
+        let inviteArr = await config.Account.find({"inviterCode":invite_code});
+        if(inviteArr && inviteArr.length>0){
+            for (let index = 0; index < inviteArr.length; index++) {
+                let deposit = inviteArr[index].historyDeposit;
+                let withdraw = inviteArr[index].historyWithdraw;
+                totalDeposit += Number(deposit);
+                totalWithdraw += Number(withdraw);
+                totalMember++;
+                findInvite(inviteArr[index].inviteCode);
+            }
         }
     }
 }
