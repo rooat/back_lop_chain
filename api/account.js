@@ -46,20 +46,22 @@ var dataMap = new Map();
 exports.calculate_total = async function (req, res) {
     let invite_code = req.body.inviteCode;
     // console.log("invite_code---",invite_code)
+    let deposit_total =0;
+    let withdraw_total =0;
+    let member_total = 0;
     if(invite_code && dataMap.get(invite_code)){
         let data = dataMap.get(invite_code);
         return res.send({"resp":{"deposit":data.deposit_total,"withdraw":data.withdraw_total,"member":data.member_total}}); 
     }else{
         await findInvite(invite_code);
+        deposit_total =totalDeposit;
+        withdraw_total =totalWithdraw;
+        member_total = totalMember;
         dataMap.set(invite_code,{"deposit_total":deposit_total,"withdraw_total":withdraw_total,"member_total":member_total})
         setTimeout(function(){
             dataMap = new Map();
         },120000)
     }
-    let deposit_total =totalDeposit;
-    let withdraw_total =totalWithdraw;
-    let member_total = totalMember;
-
     totalDeposit = 0;
     totalWithdraw = 0;
     totalMember = 0;
