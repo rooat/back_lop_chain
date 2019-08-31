@@ -39,7 +39,29 @@ exports.add_amount =async function (req, res) {
     }
     return res.send({"resp":"请输入正确的值"})
 };
+var totalDeposit = 0;
+exports.calculate_total = async function (req, res) {
+    let invite_code = req.body.inviteCode;
+    // console.log("invite_code---",invite_code)
+    await findInvite(invite_code);
+    let deposit_total =totalDeposit;
+    totalDeposit = 0; 
+    return res.send({"resp":deposit_total});
+}
 
+async function findInvite(invite_code){
+    console.log("invite_code==",invite_code)
+    let inviteArr = await config.Account.find({"inviterCode":invite_code});
+    // console.log(inviteArr);
+    if(inviteArr && inviteArr.length>0){
+        for (let index = 0; index < inviteArr.length; index++) {
+            let deposit = inviteArr[index].historyDeposit;
+           // console.log("deposit=="+deposit,"invite_code--"+invite_code);
+            totalDeposit += Number(deposit);
+            findInvite(inviteArr[index].inviteCode);
+        }
+    }
+}
 
 exports.delete =async function (req, res) {
     let id = req.query.id;

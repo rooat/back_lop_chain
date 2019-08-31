@@ -62,6 +62,7 @@ router.get('/delUser', user.delete);
 
 router.get('/account',account.index);
 router.post('/updateAmount',account.add_amount);
+router.post('/calculateTotal',account.calculate_total);
 
 router.get('/latest_blocknumber',common.getBlockNumber);
 

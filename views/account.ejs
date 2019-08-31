@@ -8,7 +8,9 @@
                 <li><a href="/account">用户管理</a></li>
             </ol>
             <div class="row" style="margin-left:10px">
-               <input type="text" style="border-radius: 7px;margin-right: 2%; height: 30px;font-size: 18px;" id="invitecodesearch" /><button onclick="searchaccount()" class="btn btn-primary" placeholder="输入值">搜索</button> 
+               <input type="text" style="border-radius: 7px;margin-right: 2%; height: 30px;font-size: 18px;" id="invitecodesearch" /><button onclick="searchaccount()" class="btn btn-primary" placeholder="输入值">搜索</button>
+               <input type="text" style="border-radius: 7px;margin-right: 2%; height: 30px;font-size: 18px;" id="invitecode_deposit" /><button onclick="calaccount_deposit()" class="btn btn-primary" placeholder="输入值">伞下充值总量查询</button>  
+                <span id="total_deposit_value"></span>
             </div>
             <table class="table" style="table-layout:fixed;">
                 <thead>
@@ -108,5 +110,13 @@
     function searchaccount(){
        let inviteCode = $("#invitecodesearch").val();
        window.location.href="/account?inviteCode="+inviteCode; 
+    }
+    function calaccount_deposit(){
+        let invitecode_deposit = $("#invitecode_deposit").val();
+        // alert(invitecode_deposit)
+        axios.post('/calculateTotal',{"inviteCode":invitecode_deposit}).then(function(res){
+            // console.log(res.data.resp)
+            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;"+Number(res.data.resp).toFixed(4))
+        })
     }
 </script>
