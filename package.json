@@ -44,7 +44,7 @@
     "swarm-js": "^0.1.39",
     "underscore": "^1.9.1",
     "utf8": "^3.0.0",
-    "web3": "git+https://github.com/liujett/web3.js.git#Tag35",
+    "web3": "^1.2.1",
     "web3-core": "^1.0.0-beta.55",
     "web3-core-promievent": "^1.0.0-beta.48",
     "web3-eth-contract": "^1.0.0-beta.46",
