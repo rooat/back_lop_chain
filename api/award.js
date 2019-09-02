@@ -59,12 +59,13 @@ async function validCreateState(id,type1,type2){
                 }else if(txxs.state==2){
                     return 2;
                 }
-                if(txxs.txhash && txxs.txhash.length==66){
-                    let recept = await config.web3.eth.getTransactionReceipt(txxs.txhash);
-                    if(recept.status){
-                        return 2;
-                    }
-                }
+                //    if(txxs.txhash && txxs.txhash.length==66){
+                //        let recept = await config.web3.eth.getTransactionReceipt(txxs.txhash);
+                //        if(recept.status){
+                //            return 2;
+    
+    		    //         }
+                //     }
                 
             }
         }
