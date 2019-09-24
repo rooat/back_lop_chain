@@ -1,5 +1,5 @@
 // var Web3 = require('web3')
-var {User,Phenix,Round,Task,Account,Deposit,Withdraw,Reward,Transaction,Log,Notice,Award} = require('./lop/db');
+var {User,Phenix,Round,Task,Account,Deposit,Withdraw,Reward,Transaction,Log,Notice,Award,Feed} = require('./lop/db');
 
 const logger = require('./logs/logger.js')
 const utils = require('./utils/utils')
@@ -11,7 +11,7 @@ const utils = require('./utils/utils')
 var controllerAdd = "xxx";//控制者地址
 var controllerPrivate = "xx";//控制者私钥
 
-var tokenAddress= "0xbc923f769f56493230fdc45db5ca43742862fb20";//合约地址
+var tokenAddress= "0xc0c60e6cdb0a59d6ef611c763e207e7bd00fed84";//合约地址
 
 const token = require('./contract/tokenABI.json');
 
@@ -49,6 +49,7 @@ module.exports = {
     Log,
     Notice,
     Award,
+    Feed,
 
     controllerAdd,
     

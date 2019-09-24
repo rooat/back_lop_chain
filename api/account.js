@@ -42,7 +42,9 @@ exports.add_amount =async function (req, res) {
 var totalDeposit = 0;
 var totalWithdraw = 0;
 var totalMember = 0;
+var totalFeed = 0;
 var dataMap = new Map();
+var flag = false;
 exports.calculate_total = async function (req, res) {
     let invite_code = req.body.inviteCode;
     // console.log("invite_code---",invite_code)
@@ -51,7 +53,7 @@ exports.calculate_total = async function (req, res) {
     let member_total = 0;
     if(invite_code && dataMap.get(invite_code)){
         let data = dataMap.get(invite_code);
-        return res.send({"resp":{"deposit":data.deposit_total,"withdraw":data.withdraw_total,"member":data.member_total}}); 
+        return res.send({"resp":{"deposit":data.deposit_total,"withdraw":data.withdraw_total,"member":data.member_total,"feed":data.feed_total}}); 
     }else{
         await findInvite(invite_code);
         deposit_total =totalDeposit;
@@ -60,11 +62,16 @@ exports.calculate_total = async function (req, res) {
         totalDeposit = 0;
         totalWithdraw = 0;
         totalMember = 0;
-        dataMap.set(invite_code,{"deposit_total":deposit_total,"withdraw_total":withdraw_total,"member_total":member_total})
-        setTimeout(function(){
-            dataMap = new Map();
-        },60000)
-        return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total,"member":member_total}});
+        dataMap.set(invite_code,{"deposit_total":deposit_total,"withdraw_total":withdraw_total,"member_total":member_total,"feed_total":totalFeed})
+        if(!flag){
+            flag = true;
+            setTimeout(function(){
+                dataMap = new Map();
+                flag = false;
+            },60000)
+        }
+        
+        return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total,"member":member_total,"feed":totalFeed}});
     }
 }
 
@@ -75,6 +82,10 @@ async function findInvite(invite_code){
             for (let index = 0; index < inviteArr.length; index++) {
                 let deposit = inviteArr[index].historyDeposit;
                 let withdraw = inviteArr[index].historyWithdraw;
+                let feed = await config.Feed.findOne({"address":inviteArr[index].address,"index":inviteArr[index].index})
+                if(feed){
+                    totalFeed += Number(feed.amount)/10**18;
+                }
                 totalDeposit += Number(deposit);
                 totalWithdraw += Number(withdraw);
                 totalMember++;

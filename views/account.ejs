@@ -123,9 +123,10 @@
             let deposit = res.data.resp.deposit;
             let withdraw = res.data.resp.withdraw;
             let member = res.data.resp.member;
+            let feed = res.data.resp.feed;
             let subs = Number(deposit)-Number(withdraw);
             $("#calaccount_depositbtn").attr("disabled",false)
-            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;充值 &nbsp;:&nbsp;"+Number(deposit).toFixed(4)+";----提现 &nbsp;:&nbsp;"+Number(withdraw).toFixed(4)+";----差额&nbsp;:&nbsp;"+Number(subs).toFixed(4)+"----人数;"+member)
+            $("#total_deposit_value").html("&nbsp;&nbsp;&nbsp;&nbsp;充值 &nbsp;:&nbsp;"+Number(deposit).toFixed(4)+";----提现 &nbsp;:&nbsp;"+Number(withdraw).toFixed(4)+";----差额&nbsp;:&nbsp;"+Number(subs).toFixed(4)+"---喂养："+Number(feed).toFixed(4)+"----人数;"+member)
         })
     }
 </script>
