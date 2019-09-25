@@ -51,6 +51,7 @@ exports.calculate_total = async function (req, res) {
     let deposit_total =0;
     let withdraw_total =0;
     let member_total = 0;
+    let total_feed =0;
     if(invite_code && dataMap.get(invite_code)){
         let data = dataMap.get(invite_code);
         return res.send({"resp":{"deposit":data.deposit_total,"withdraw":data.withdraw_total,"member":data.member_total,"feed":data.feed_total}}); 
@@ -59,10 +60,12 @@ exports.calculate_total = async function (req, res) {
         deposit_total =totalDeposit;
         withdraw_total =totalWithdraw;
         member_total = totalMember;
+        total_feed = totalFeed;
+        totalFeed =  0;
         totalDeposit = 0;
         totalWithdraw = 0;
         totalMember = 0;
-        dataMap.set(invite_code,{"deposit_total":deposit_total,"withdraw_total":withdraw_total,"member_total":member_total,"feed_total":totalFeed})
+        dataMap.set(invite_code,{"deposit_total":deposit_total,"withdraw_total":withdraw_total,"member_total":member_total,"feed_total":total_Feed})
         if(!flag){
             flag = true;
             setTimeout(function(){
@@ -71,7 +74,7 @@ exports.calculate_total = async function (req, res) {
             },60000)
         }
         
-        return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total,"member":member_total,"feed":totalFeed}});
+        return res.send({"resp":{"deposit":deposit_total,"withdraw":withdraw_total,"member":member_total,"feed":total_Feed}});
     }
 }
 
