@@ -42,7 +42,7 @@
     "serve-favicon": "~2.4.2",
     "socket.io": "^2.0.3",
     "swarm-js": "^0.1.39",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "utf8": "^3.0.0",
     "web3": "^1.2.1",
     "web3-core": "^1.0.0-beta.55",
